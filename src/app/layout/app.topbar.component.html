@@ -1,20 +1,48 @@
 <div class="layout-topbar">
     <a class="layout-topbar-logo" routerLink="">
-        <img src="assets/layout/images/{{layoutService.config().colorScheme === 'light' ? 'logo-dark' : 'logo-white'}}.svg" alt="logo">
-        <span>Мазаалай хүргэлт</span>
+        <img
+            src="assets/layout/images/{{
+                layoutService.config().colorScheme === 'light'
+                    ? 'logo-dark'
+                    : 'logo-white'
+            }}.svg"
+            alt="logo"
+        />
+        <span>Дипломын ажлын удирдлагын систем </span>
     </a>
 
-    <button #menubutton class="p-link layout-menu-button layout-topbar-button" (click)="layoutService.onMenuToggle()">
+    <button
+        #menubutton
+        class="p-link layout-menu-button layout-topbar-button"
+        (click)="layoutService.onMenuToggle()"
+    >
         <i class="pi pi-bars"></i>
     </button>
 
-    <button #topbarmenubutton class="p-link layout-topbar-menu-button layout-topbar-button" (click)="layoutService.showProfileSidebar()">
+    <button
+        #topbarmenubutton
+        class="p-link layout-topbar-menu-button layout-topbar-button"
+        (click)="layoutService.showProfileSidebar()"
+    >
         <i class="pi pi-ellipsis-v"></i>
     </button>
 
-    <div #topbarmenu class="layout-topbar-menu" [ngClass]="{'layout-topbar-menu-mobile-active': layoutService.state.profileSidebarVisible}">
-
+    <div
+        #topbarmenu
+        class="layout-topbar-menu"
+        [ngClass]="{
+            'layout-topbar-menu-mobile-active':
+                layoutService.state.profileSidebarVisible
+        }"
+    >
         <p-menu #menu [popup]="true" [model]="menuItems"></p-menu>
-        <button type="button" pButton icon="pi pi-user" label="Profile" (click)="menu.toggle($event)" style="width:auto"></button>
+        <button
+            type="button"
+            pButton
+            icon="pi pi-user"
+            label="Profile"
+            (click)="menu.toggle($event)"
+            style="width: auto"
+        ></button>
     </div>
 </div>

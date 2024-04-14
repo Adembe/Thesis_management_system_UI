@@ -27,11 +27,10 @@ import { RatingModule } from 'primeng/rating';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { DialogModule } from 'primeng/dialog';
 import { FormsModule } from '@angular/forms';
-import { OrderService } from 'src/app/services/order.service';
-import { Order } from 'src/app/interfaces/order';
-
+import { ThesisService } from 'src/app/services/thesis.service';
+import { Thesis } from 'src/app/interfaces/thesis';
 @Component({
-    selector: 'app-create-track-code',
+    selector: 'app-thesis',
     standalone: true,
     imports: [
         CommonModule,
@@ -61,14 +60,14 @@ import { Order } from 'src/app/interfaces/order';
         DialogModule,
     ],
     providers: [MessageService],
-    templateUrl: './create-track-code.component.html',
-    styleUrl: './create-track-code.component.scss',
+    templateUrl: './thesis.component.html',
+    styleUrl: './thesis.component.scss',
 })
-export class CreateTrackCodeComponent implements OnInit {
-    order: Order = {};
-    orders: Order[] = [];
+export class ThesisComponent {
+    thesis: Thesis = {};
+    thesises: Thesis[] = [];
 
-    productDialog: boolean = false;
+    thesisDialog: boolean = false;
 
     deleteProductDialog: boolean = false;
 
@@ -78,7 +77,7 @@ export class CreateTrackCodeComponent implements OnInit {
 
     product: Product = {};
 
-    selectedProducts: Product[] = [];
+    selectedThesis: Product[] = [];
 
     submitted: boolean = false;
 
@@ -89,55 +88,38 @@ export class CreateTrackCodeComponent implements OnInit {
     rowsPerPageOptions = [5, 10, 20];
 
     constructor(
-        private productService: ProductService,
         private messageService: MessageService,
-        private orderService: OrderService
+        private thesisService: ThesisService
     ) {}
 
     ngOnInit(): void {
-        this.orderService.getOrders().subscribe((data: any) => {
-            console.log('data: ', data);
-            this.orders = data.body;
-        });
-
-        this.cols = [
-            { field: 'id', header: 'Id' },
-            { field: 'description', header: 'Description' },
-            { field: 'track_code', header: 'TrackCode' },
-            { field: 'status', header: 'Status' },
-        ];
-
-        this.statuses = [
-            { label: 'INSTOCK', value: 'instock' },
-            { label: 'LOWSTOCK', value: 'lowstock' },
-            { label: 'OUTOFSTOCK', value: 'outofstock' },
-        ];
+        this.thesisService
+            .getOwnThesis(localStorage.getItem('user_id'))
+            .subscribe((data: any) => {
+                console.log('data: ', data);
+                this.thesises = data.body;
+            });
     }
 
     openNew() {
         this.product = {};
         this.submitted = false;
-        this.productDialog = true;
+        this.thesisDialog = true;
     }
 
-    deleteSelectedProducts() {
+    deleteselectedThesis() {
         this.deleteProductsDialog = true;
     }
 
-    editProduct(product: Product) {
-        this.product = { ...product };
-        this.productDialog = true;
-    }
-
-    deleteProduct(product: Product) {
-        this.deleteProductDialog = true;
-        this.product = { ...product };
+    editThesis(thesis: Thesis) {
+        this.thesis = { ...thesis };
+        this.thesisDialog = true;
     }
 
     confirmDeleteSelected() {
         this.deleteProductsDialog = false;
         this.products = this.products.filter(
-            (val) => !this.selectedProducts.includes(val)
+            (val) => !this.selectedThesis.includes(val)
         );
         this.messageService.add({
             severity: 'success',
@@ -145,7 +127,7 @@ export class CreateTrackCodeComponent implements OnInit {
             detail: 'Products Deleted',
             life: 3000,
         });
-        this.selectedProducts = [];
+        this.selectedThesis = [];
     }
 
     confirmDelete() {
@@ -163,19 +145,26 @@ export class CreateTrackCodeComponent implements OnInit {
     }
 
     hideDialog() {
-        this.productDialog = false;
+        this.thesisDialog = false;
         this.submitted = false;
     }
 
-    saveOrder() {
-        this.submitted = true;
-        this.orderService
-            .createOrder({
-                user_id: 1,
-                track_code: this.order.trackCode,
-                description: this.order.description,
-            })
-            .subscribe((response) => {
+    saveThesis(isUpdate: boolean) {
+        console.log(isUpdate);
+        if (isUpdate === true) {
+            this.submitted = true;
+
+            const body = {
+                id: this.thesis.id,
+                status: 1,
+                teacher_id: Number(localStorage.getItem('user_id')),
+                mgl_name: this.thesis.mgl_name,
+                eng_name: this.thesis.eng_name,
+                content: this.thesis.content,
+                requirement: this.thesis.requirement,
+            };
+            console.log('body', body);
+            this.thesisService.updateThesis(body).subscribe((response) => {
                 this.messageService.add({
                     severity: 'success',
                     summary: 'Successful',
@@ -183,22 +172,69 @@ export class CreateTrackCodeComponent implements OnInit {
                     life: 3000,
                 });
                 if (response.status === true) {
-                    this.orders.push(response.body);
+                    console.log(response.body);
+                    this.thesises = [...response.body];
                 }
             });
-        this.order = {};
-        this.productDialog = false;
+            this.thesis = {};
+            this.thesisDialog = false;
+        } else {
+            this.submitted = true;
+
+            const body = {
+                status: 1,
+                teacher_id: Number(localStorage.getItem('user_id')),
+                mgl_name: this.thesis.mgl_name,
+                eng_name: this.thesis.eng_name,
+                content: this.thesis.content,
+                requirement: this.thesis.requirement,
+            };
+            console.log('body', body);
+            this.thesisService.createThesis(body).subscribe((response) => {
+                this.messageService.add({
+                    severity: 'success',
+                    summary: 'Successful',
+                    detail: response.message,
+                    life: 3000,
+                });
+                if (response.status === true) {
+                    this.thesises.push(response.body);
+                }
+            });
+            this.thesis = {};
+            this.thesisDialog = false;
+        }
     }
 
-    deleteOrder() {
+    deleteThesis(thesis) {
         this.submitted = true;
-        const ids = this.selectedProducts.map((i)=>{
-            return i.id
+        this.thesisService.deleteThesis(thesis.id).subscribe((response) => {
+            console.log('response: ', response);
+            this.messageService.add({
+                severity: 'success',
+                summary: 'Successful',
+                detail: response.message,
+                life: 3000,
+            });
+            if (response.status === true) {
+                this.thesises = [...response.body];
+            }
         });
 
-        this.orderService
-            .deleteSelectedOrders({
-               ids : ids,
+        console.log('this.selectedThesis: ', this.selectedThesis);
+        this.thesis = {};
+        this.thesisDialog = false;
+    }
+
+    deleteThesiss() {
+        this.submitted = true;
+        const ids = this.selectedThesis.map((i) => {
+            return i.id;
+        });
+
+        this.thesisService
+            .deleteAllThesiss({
+                ids: ids,
             })
             .subscribe((response) => {
                 console.log('response: ', response);
@@ -209,43 +245,12 @@ export class CreateTrackCodeComponent implements OnInit {
                     life: 3000,
                 });
                 if (response.status === true) {
-                    this.orders = [...response.body]
+                    this.thesises = [...response.body];
                 }
             });
-        
-        console.log('this.selectedProducts: ', this.selectedProducts);
-        this.order = {};
-        this.productDialog = false;
+
+        console.log('this.selectedThesis: ', this.selectedThesis);
+        this.thesis = {};
+        this.thesisDialog = false;
     }
-
-
-    findIndexById(id: string): number {
-        let index = -1;
-        for (let i = 0; i < this.products.length; i++) {
-            if (this.products[i].id === id) {
-                index = i;
-                break;
-            }
-        }
-
-        return index;
-    }
-
-    createId(): string {
-        let id = '';
-        const chars =
-            'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-        for (let i = 0; i < 5; i++) {
-            id += chars.charAt(Math.floor(Math.random() * chars.length));
-        }
-        return id;
-    }
-
-    onGlobalFilter(table: Table, event: Event) {
-        table.filterGlobal(
-            (event.target as HTMLInputElement).value,
-            'contains'
-        );
-    }
-    
 }

@@ -58,10 +58,11 @@ export class LoginComponent implements OnInit {
             email: this.email,
         };
         this.authService.login(credential).subscribe((res) => {
-            console.log('res: ', res);
             if (res.status === true) {
-                localStorage.setItem('token', res.body);
-                this.router.navigate(["/"])
+                let a = JSON.stringify(res.body);
+                localStorage.setItem('token', res.body['Token']);
+                localStorage.setItem('user_id', res.body['UserId']);
+                this.router.navigate(['/']);
             } else {
                 this.messageService.add({
                     key: 'tst',

@@ -1,14 +1,18 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { CreateTrackCodeComponent } from './create-track-code/create-track-code.component';
+import { StudentComponent } from './student/student.component';
 import { OrderAdminComponent } from './order-admin/order-admin.component';
+import { ThesisComponent } from './thesis/thesis.component';
+import { ThesisOfficeComponent } from './thesis-office/thesis-office.component';
 const routes: Routes = [
-  {path: 'create_trackcode', component: CreateTrackCodeComponent},
-  {path: 'order_admin', component: OrderAdminComponent},
+    { path: 'student', component: StudentComponent },
+    { path: 'order_admin', component: OrderAdminComponent },
+    { path: 'thesis', component: ThesisComponent },
+    { path: 'thesis-office', component: ThesisOfficeComponent },
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+    imports: [RouterModule.forChild(routes)],
+    exports: [RouterModule],
 })
-export class PagesRoutingModule { }
+export class PagesRoutingModule {}

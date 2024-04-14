@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CreateTrackCodeComponent } from './create-track-code.component';
+import { ThesisComponent } from './thesis.component';
 
-describe('CreateTrackCodeComponent', () => {
-  let component: CreateTrackCodeComponent;
-  let fixture: ComponentFixture<CreateTrackCodeComponent>;
+describe('ThesisComponent', () => {
+  let component: ThesisComponent;
+  let fixture: ComponentFixture<ThesisComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [CreateTrackCodeComponent]
+      imports: [ThesisComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(CreateTrackCodeComponent);
+    fixture = TestBed.createComponent(ThesisComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

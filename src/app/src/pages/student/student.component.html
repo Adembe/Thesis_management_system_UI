@@ -1,0 +1,150 @@
+<div class="grid">
+    <div class="col-12">
+        <div class="card px-6 py-6">
+            <p-toast></p-toast>
+            <p-table
+                #dt
+                [value]="thesises"
+                [columns]="cols"
+                responsiveLayout="scroll"
+                [rows]="10"
+                [globalFilterFields]="[
+                    'administrator',
+                    'teacher_name',
+                    'subject_mgl',
+                    'subject_eng',
+                    'content',
+                    'requirement'
+                ]"
+                [paginator]="true"
+                [rowsPerPageOptions]="[10, 20, 30]"
+                [showCurrentPageReport]="true"
+                currentPageReportTemplate=" {first} - {last} нийт:{totalRecords} "
+                [(selection)]="selectedThesis"
+                selectionMode="multiple"
+                [rowHover]="true"
+                dataKey="id"
+            >
+                <ng-template pTemplate="caption">
+                    <div
+                        class="flex flex-column md:flex-row md:justify-content-between md:align-items-center"
+                    >
+                        <h5 class="m-0">Багш нарын дэвшүүлсэн сэдвүүд</h5>
+                        <span class="block mt-2 md:mt-0 p-input-icon-left">
+                            <i class="pi pi-search"></i>
+                            <input
+                                pInputText
+                                type="text"
+                                (input)="onGlobalFilter(dt, $event)"
+                                placeholder="Хайх..."
+                                class="w-full sm:w-auto"
+                            />
+                        </span>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th style="width: 20px">№</th>
+                        <th pSortableColumn="administrator">
+                            Удирдагч<p-sortIcon
+                                field="administrator"
+                            ></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="subject_name_mgl">
+                            Сэдвийн нэр (Монгол)
+                            <p-sortIcon field="subject_name_mgl"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="subject_name_eng">
+                            Сэдвийн нэр (Англи)
+                            <p-sortIcon field="subject_name_eng"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="content">
+                            Агуулга
+                            <p-sortIcon field="content"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="requirement">
+                            Шаардлага
+                            <p-sortIcon field="requirement"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="status">
+                            Хүсэлт
+                            <p-sortIcon field="status"></p-sortIcon>
+                        </th>
+                        <th></th>
+                    </tr>
+                </ng-template>
+                <ng-template
+                    pTemplate="body"
+                    let-thesis
+                    let-rowIndex="rowIndex"
+                >
+                    <tr>
+                        <td>{{ rowIndex + 1 }}</td>
+                        <td style="width: 25%; min-width: 10rem">
+                            <span class="p-column-title" style="width: 30px"
+                                >Id</span
+                            >
+                            {{ thesis?.lname }}
+                        </td>
+                        <td style="width: 25%; min-width: 10rem">
+                            <span class="p-column-title">Id1</span>
+                            {{ thesis?.mgl_name }}
+                        </td>
+                        <td style="width: 25%; min-width: 10rem">
+                            <span class="p-column-title">Description</span>
+                            {{ thesis?.eng_name }}
+                        </td>
+                        <td style="width: 25%; min-width: 8rem">
+                            <span class="p-column-title">Price</span>
+                            {{ thesis?.content }}
+                        </td>
+                        <td style="width: 25%; min-width: 8rem">
+                            <span class="p-column-title">Price</span>
+                            {{ thesis?.requirement }}
+                        </td>
+                        <td style="width: 25%; min-width: 8rem">
+                            <span class="p-column-title">Price</span>
+                            <ng-container
+                                *ngIf="thesis?.status == 2; else otherStatus"
+                            >
+                                <span>Баталгаажсан</span>
+                            </ng-container>
+                            <ng-template #otherStatus>
+                                <ng-container
+                                    *ngIf="
+                                        thesis?.status == 0;
+                                        else nonConfirmed
+                                    "
+                                >
+                                    <span>Цуцлагдсан</span>
+                                </ng-container>
+                            </ng-template>
+                            <ng-template #nonConfirmed>
+                                <span>Хүлээгдэж байна</span>
+                            </ng-template>
+                        </td>
+
+                        <td>
+                            <div class="flex">
+                                <button
+                                    pButton
+                                    pRipple
+                                    icon="pi pi-times"
+                                    class="p-button-rounded mr-2 p-button-danger"
+                                    (click)="UnConfirmOffThesis(thesis)"
+                                ></button>
+                                <button
+                                    pButton
+                                    pRipple
+                                    icon="pi pi-check"
+                                    class="p-button-rounded p-button-success mr-2"
+                                    (click)="comfirmOffThesis(thesis)"
+                                ></button>
+                            </div>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+    </div>
+</div>
