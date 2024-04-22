@@ -11,22 +11,29 @@ export class ThesisService {
     constructor(private http: HttpClient) {
         console.log('apiUrl: ', this.apiUrl);
     }
-
+    //Shine diplomin sedev devshvvleh
     createThesis(thesis: any): Observable<any> {
         return this.http.post<any>(this.apiUrl, thesis);
     }
+    //Diplomiig update hiih
     updateThesis(thesis: any): Observable<any> {
         return this.http.put<any>(this.apiUrl, thesis);
     }
-
+    //Zowhon ooriin dewshvvlsen sedwiig awchirna
     getOwnThesis(teacher_id: any): Observable<any[]> {
         return this.http.get<any[]>(this.apiUrl + '/own/' + teacher_id);
     }
-
+    //Dewshvvlsen diplomin sedwiig ustgana
     deleteThesis(id: any): Observable<any> {
         return this.http.delete<any[]>(this.apiUrl + '/' + id);
     }
+    //Bvh diplominn sedwiig ustgana diplomin sedev devshvvleh
     deleteAllThesiss(ids: any): Observable<any> {
         return this.http.delete<any[]>(this.apiUrl, { body: ids });
+    }
+
+    //huselt ilgeesen oyutnuudiig haruilna
+    getRequestStudents(id: any): Observable<any> {
+        return this.http.get<any>(this.apiUrl + '/allrequested/' + id);
     }
 }

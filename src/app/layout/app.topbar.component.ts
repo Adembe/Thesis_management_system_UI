@@ -1,15 +1,13 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { MenuItem } from 'primeng/api';
-import { LayoutService } from "./service/app.layout.service";
+import { LayoutService } from './service/app.layout.service';
 import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-topbar',
-    templateUrl: './app.topbar.component.html'
+    templateUrl: './app.topbar.component.html',
 })
 export class AppTopBarComponent {
-
-
     items!: MenuItem[];
     menuItems!: MenuItem[];
 
@@ -19,26 +17,32 @@ export class AppTopBarComponent {
 
     @ViewChild('topbarmenu') menu!: ElementRef;
 
-    constructor(public layoutService: LayoutService,public router:Router) { 
+    constructor(public layoutService: LayoutService, public router: Router) {
         this.menuItems = [
             {
-                label: 'Профайл', icon: 'pi pi-fw pi-check'
+                label: 'Профайл',
+                icon: 'pi pi-fw pi-check',
             },
             {
-                label: 'Заавар', icon: 'pi pi-fw pi-refresh'
+                label: 'Заавар',
+                icon: 'pi pi-fw pi-refresh',
             },
             {
-                label: 'Тохиргоо', icon: 'pi pi-fw pi-trash'
+                label: 'Тохиргоо',
+                icon: 'pi pi-fw pi-trash',
             },
             {
-                separator: true
+                separator: true,
             },
             {
-                label: 'Гарах', icon: 'pi pi-fw pi-home',
+                label: 'Гарах',
+                icon: 'pi pi-fw pi-home',
                 command: () => {
-                    localStorage.removeItem("token");
-                    this.router.navigate(["/auth/login"])
-                }
+                    localStorage.removeItem('token');
+                    localStorage.removeItem('user_id');
+                    localStorage.removeItem('type');
+                    this.router.navigate(['/auth/login']);
+                },
             },
         ];
     }

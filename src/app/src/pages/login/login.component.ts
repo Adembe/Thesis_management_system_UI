@@ -62,6 +62,7 @@ export class LoginComponent implements OnInit {
                 let a = JSON.stringify(res.body);
                 localStorage.setItem('token', res.body['Token']);
                 localStorage.setItem('user_id', res.body['UserId']);
+                localStorage.setItem('type', res.body['Type']);
                 this.router.navigate(['/']);
             } else {
                 this.messageService.add({

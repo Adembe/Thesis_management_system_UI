@@ -66,8 +66,9 @@ import { StudentService } from 'src/app/services/student.service';
 export class StudentComponent implements OnInit {
     thesis: AllThesis = {};
     thesises: AllThesis[] = [];
+    showThesis: AllThesis[] = [];
 
-    thesisDialog: boolean = false;
+    showRegDialog: boolean = false;
 
     deleteProductDialog: boolean = false;
 
@@ -100,6 +101,19 @@ export class StudentComponent implements OnInit {
         });
     }
 
+    myShowReqModul() {
+        this.product = {};
+        this.submitted = false;
+        this.showRegDialog = true;
+        this.studentService
+            .myShowRequest(localStorage.getItem('user_id'))
+            .subscribe((data: any) => {
+                console.log('data: ', data);
+                this.showThesis = data.body;
+                console.log(this.showThesis);
+            });
+    }
+
     deleteselectedThesis() {
         this.deleteProductsDialog = true;
     }
@@ -129,31 +143,27 @@ export class StudentComponent implements OnInit {
     //     this.thesis = {};
     //     this.thesisDialog = false;
     // }
-    // comfirmOffThesis(thesis) {
-    //     this.submitted = true;
+    comfirmOffThesis(thesis) {
+        this.submitted = true;
 
-    //     const body = {
-    //         id: thesis.id,
-    //         status: 2,
-    //         teacher_id: Number(localStorage.getItem('user_id')),
-    //         mgl_name: thesis.mgl_name,
-    //         eng_name: thesis.eng_name,
-    //         content: thesis.content,
-    //         requirement: thesis.requirement,
-    //     };
-    //     console.log(body);
+        const body = {
+            thesis_id: thesis.id,
+            student_id: Number(localStorage.getItem('user_id')),
+            teacher_id: thesis.teacher_id,
+        };
+        console.log('body', body);
 
-    //     this.studentService.updateThesis(body).subscribe((response) => {
-    //         this.messageService.add({
-    //             severity: 'success',
-    //             summary: 'Successful',
-    //             detail: response.message,
-    //             life: 3000,
-    //         });
+        this.studentService.updateReqThesis(body).subscribe((response) => {
+            this.messageService.add({
+                severity: 'success',
+                summary: 'Successful',
+                detail: response.message,
+                life: 3000,
+            });
 
-    //         this.ngOnInit();
-    //     });
-    //     this.thesis = {};
-    //     this.thesisDialog = false;
-    // }
+            this.ngOnInit();
+        });
+        this.thesis = {};
+        this.showRegDialog = false;
+    }
 }

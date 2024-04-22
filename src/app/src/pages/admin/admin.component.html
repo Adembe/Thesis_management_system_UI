@@ -1,0 +1,312 @@
+<div class="grid">
+    <div class="col-12">
+        <div class="card">
+            <p-toast></p-toast>
+            <p-toolbar styleClass="d-flex flex-row-reverse bg-white">
+                <ng-template pTemplate="right">
+                    <div class="my-2">
+                        <button
+                            pButton
+                            pRipple
+                            label="Шинэ хэрэглэгч үүсгэх"
+                            icon="pi pi-plus"
+                            class="p-button-success mr-2"
+                            (click)="openNew()"
+                        ></button>
+                        <button
+                            pButton
+                            pRipple
+                            label="Устгах"
+                            icon="pi pi-trash"
+                            class="p-button-danger"
+                            (click)="deleteUser()"
+                            [disabled]="
+                                !selectedThesis || !selectedThesis.length
+                            "
+                        ></button>
+                    </div>
+                </ng-template>
+            </p-toolbar>
+            <p-table
+                #dt
+                [value]="users"
+                [columns]="cols"
+                responsiveLayout="scroll"
+                [rows]="10"
+                [globalFilterFields]="[
+                    'teacher_name',
+                    'subject_mgl',
+                    'subject_eng',
+                    'content',
+                    'requirement'
+                ]"
+                [paginator]="true"
+                [rowsPerPageOptions]="[10, 20, 30]"
+                [showCurrentPageReport]="true"
+                currentPageReportTemplate=" {first} - {last} нийт:{totalRecords} "
+                [(selection)]="selectedThesis"
+                selectionMode="multiple"
+                [rowHover]="true"
+                dataKey="id"
+            >
+                <ng-template pTemplate="caption">
+                    <div
+                        class="flex flex-column md:flex-row md:justify-content-between md:align-items-center"
+                    >
+                        <h5 class="m-0">Бүртгэсэн хэрэглэгчид</h5>
+                        <span class="block mt-2 md:mt-0 p-input-icon-left">
+                            <i class="pi pi-search"></i>
+                            <input
+                                pInputText
+                                type="text"
+                                (input)="onGlobalFilter(dt, $event)"
+                                placeholder="Хайх..."
+                                class="w-full sm:w-auto"
+                            />
+                        </span>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <!-- <th style="width: 3rem">
+                            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                        </th> -->
+                        <th pSortableColumn="fname">
+                            Овог
+                            <p-sortIcon field="fname"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="lname">
+                            Нэр
+                            <p-sortIcon field="lname"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="user_mail">
+                            Майл<p-sortIcon field="user_mail"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="type">
+                            Төрөл
+                            <p-sortIcon field="type"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="type">
+                            Хөтөлбөр
+                            <p-sortIcon field="type"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="password">
+                            Нууц үг
+                            <p-sortIcon field="password"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="phone">
+                            Утас
+                            <p-sortIcon field="phone"></p-sortIcon>
+                        </th>
+                        <th></th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-user>
+                    <tr>
+                        <td style="width: 25%; min-width: 8rem">
+                            <span class="p-column-title">Price</span>
+                            {{ user?.fname }}
+                        </td>
+                        <td style="width: 25%; min-width: 8rem">
+                            <span class="p-column-title">Price</span>
+                            {{ user?.lname }}
+                        </td>
+                        <td style="width: 25%; min-width: 10rem">
+                            <span class="p-column-title">Id</span>
+                            {{ user?.email }}
+                        </td>
+                        <td style="width: 25%; min-width: 10rem">
+                            <span class="p-column-title">Description</span>
+                            <span *ngIf="user?.type == 0">Оюутан</span>
+                            <span *ngIf="user?.type == 1">Сургалтын алба </span>
+                            <span *ngIf="user?.type == 2">Багш</span>
+                        </td>
+                        <td style="width: 25%; min-width: 10rem">
+                            <span class="p-column-title">Description</span>
+                            <span *ngIf="user?.programm == 0"
+                                >Программ хангамж</span
+                            >
+                            <span *ngIf="user?.programm == 1"
+                                >Мэдээллийн технологи</span
+                            >
+                            <span *ngIf="user?.programm == 2"
+                                >Мэдээллийн систем</span
+                            >
+                            <span *ngIf="user?.programm == 3"
+                                >Компьютерийн ухаан</span
+                            >
+                        </td>
+                        <td style="width: 25%; min-width: 8rem">
+                            <span class="p-column-title">password</span>
+                            {{ user?.password }}
+                        </td>
+                        <td style="width: 25%; min-width: 8rem">
+                            <span class="p-column-title">Phone</span>
+                            {{ user?.phone_number }}
+                        </td>
+                        <td>
+                            <div class="flex">
+                                <button
+                                    pButton
+                                    pRipple
+                                    icon="pi pi-pencil"
+                                    class="p-button-rounded p-button-success mr-2"
+                                    (click)="editThesis(user)"
+                                ></button>
+                                <button
+                                    pButton
+                                    pRipple
+                                    icon="pi pi-trash"
+                                    class="p-button-rounded p-button-warning"
+                                    (click)="deleteUser(user)"
+                                ></button>
+                            </div>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+        <p-dialog
+            [(visible)]="usersDialog"
+            [style]="{ width: '450px' }"
+            header="Дипломын сэдэв дэвшүүлэх"
+            [modal]="true"
+            class="p-fluid"
+        >
+            <ng-template pTemplate="content">
+                <div class="field">
+                    <label for="fname">Овог</label>
+                    <input
+                        type="text"
+                        pInputText
+                        id="fname"
+                        [(ngModel)]="user.fname"
+                        required
+                        autofocus
+                        [ngClass]="{
+                            'ng-invalid ng-dirty': submitted && !user.fname
+                        }"
+                    />
+                    <small
+                        class="ng-dirty ng-invalid"
+                        *ngIf="submitted && !user.fname"
+                        >Хэрэглэгчийн овог хоосон байна.</small
+                    >
+                </div>
+                <div class="field">
+                    <label for="lname">Нэр</label>
+                    <input
+                        type="text"
+                        pInputText
+                        id="lname"
+                        [(ngModel)]="user.lname"
+                        required
+                        autofocus
+                        [ngClass]="{
+                            'ng-invalid ng-dirty': submitted && !user.lname
+                        }"
+                    />
+                    <small
+                        class="ng-dirty ng-invalid"
+                        *ngIf="submitted && !user.lname"
+                        >Хэрэглэгчийн нэр хоосон байна</small
+                    >
+                </div>
+                <div class="field">
+                    <label for="email">Майл</label>
+                    <input
+                        id="email"
+                        pInputTextarea
+                        [(ngModel)]="user.email"
+                        required
+                    />
+                    <small
+                        class="ng-dirty ng-invalid"
+                        *ngIf="submitted && !user.email"
+                        >Агуулга хоосон байна.</small
+                    >
+                </div>
+                <div class="field">
+                    <label for="requirement">Эрх</label>
+                    <p-dropdown
+                        [options]="roles"
+                        [(ngModel)]="user.type"
+                        optionLabel="name"
+                        optionValue="type"
+                        [showClear]="true"
+                    ></p-dropdown>
+                    <small
+                        class="ng-dirty ng-invalid"
+                        *ngIf="submitted && !user.type"
+                        >Төрөл хоосон байна.</small
+                    >
+                </div>
+                <div class="field">
+                    <label for="programm">Хөтөлбөр</label>
+                    <p-dropdown
+                        [options]="programm"
+                        [(ngModel)]="user.programm"
+                        optionLabel="name"
+                        optionValue="code"
+                        [showClear]="true"
+                    ></p-dropdown>
+                    <small
+                        class="ng-dirty ng-invalid"
+                        *ngIf="submitted && !user.programm"
+                        >Төрөл хоосон байна.</small
+                    >
+                </div>
+                <div class="field">
+                    <label for="password">Нууц үг</label>
+                    <input
+                        id="password"
+                        pInputText
+                        [(ngModel)]="user.password"
+                        required
+                        minlength="6"
+                    />
+                    <small
+                        class="ng-dirty ng-invalid"
+                        *ngIf="submitted && !user.password"
+                        >Нууц үг хоосон байна.</small
+                    >
+                </div>
+                <div class="field">
+                    <label for="phone_number">Утас</label>
+                    <input
+                        id="phone_number"
+                        pInputText
+                        [(ngModel)]="user.phone_number"
+                        required
+                        minlength="8"
+                        maxlength="8"
+                    />
+                    <small
+                        class="ng-dirty ng-invalid"
+                        *ngIf="submitted && !user.phone_number"
+                        >Нууц үг хоосон байна.</small
+                    >
+                </div>
+            </ng-template>
+
+            <ng-template pTemplate="footer">
+                <button
+                    pButton
+                    pRipple
+                    label="Цуцлах"
+                    icon="pi pi-times"
+                    class="p-button-text"
+                    (click)="hideDialog()"
+                ></button>
+                <button
+                    pButton
+                    pRipple
+                    label="Хадгалах"
+                    icon="pi pi-check"
+                    class="p-button-text"
+                    (click)="saveUser(true)"
+                ></button>
+            </ng-template>
+        </p-dialog>
+    </div>
+</div>

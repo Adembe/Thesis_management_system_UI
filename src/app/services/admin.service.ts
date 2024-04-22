@@ -6,20 +6,20 @@ import { environment } from 'src/environments/environment';
 @Injectable({
     providedIn: 'root',
 })
-export class StudentService {
-    private apiUrl = environment.apiUrl + '/student';
+export class AdminService {
+    private apiUrl = environment.apiUrl + '/admin';
     constructor(private http: HttpClient) {
         console.log('apiUrl: ', this.apiUrl);
     }
-    getConfThesis(): Observable<any[]> {
+    getUsers(): Observable<any[]> {
         return this.http.get<any[]>(this.apiUrl);
     }
 
-    updateReqThesis(body: any): Observable<any> {
+    deleteUser(body: any): Observable<any> {
         return this.http.put<any[]>(this.apiUrl, body);
     }
 
-    myShowRequest(student_id: any): Observable<any[]> {
-        return this.http.get<any[]>(this.apiUrl + '/' + student_id);
+    updateUser(user_id: any): Observable<any[]> {
+        return this.http.get<any[]>(this.apiUrl + '/' + user_id);
     }
 }
