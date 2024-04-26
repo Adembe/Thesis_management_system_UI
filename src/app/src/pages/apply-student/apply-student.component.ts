@@ -26,6 +26,7 @@ import { Thesis } from 'src/app/interfaces/thesis';
 import { Product } from 'src/app/demo/api/product';
 import { MessageService } from 'primeng/api';
 import { ThesisService } from 'src/app/services/thesis.service';
+import { ProcessService } from 'src/app/services/process.service';
 @Component({
     selector: 'app-apply-student',
     standalone: true,
@@ -86,7 +87,8 @@ export class ApplyStudentComponent {
 
     constructor(
         private messageService: MessageService,
-        private thesisService: ThesisService
+        private thesisService: ThesisService,
+        private processService: ProcessService
     ) {}
 
     ngOnInit(): void {
@@ -98,155 +100,28 @@ export class ApplyStudentComponent {
             });
     }
 
-    openNew() {
-        this.product = {};
-        this.submitted = false;
-        this.thesisDialog = true;
-    }
-
-    deleteselectedThesis() {
-        this.deleteProductsDialog = true;
-    }
-
-    editThesis(thesis: Thesis) {
-        this.thesis = { ...thesis };
-        this.thesisDialog = true;
-    }
-
-    confirmDeleteSelected() {
-        this.deleteProductsDialog = false;
-        this.products = this.products.filter(
-            (val) => !this.selectedThesis.includes(val)
-        );
-        this.messageService.add({
-            severity: 'success',
-            summary: 'Successful',
-            detail: 'Products Deleted',
-            life: 3000,
-        });
-        this.selectedThesis = [];
-    }
-
-    confirmDelete() {
-        this.deleteProductDialog = false;
-        this.products = this.products.filter(
-            (val) => val.id !== this.product.id
-        );
-        this.messageService.add({
-            severity: 'success',
-            summary: 'Successful',
-            detail: 'Product Deleted',
-            life: 3000,
-        });
-        this.product = {};
-    }
-
-    hideDialog() {
-        this.thesisDialog = false;
-        this.submitted = false;
-    }
-
-    saveThesis(isUpdate: boolean) {
-        console.log(isUpdate);
-        if (isUpdate === true) {
-            this.submitted = true;
-
-            const body = {
-                id: this.thesis.id,
-                status: 1,
-                teacher_id: Number(localStorage.getItem('user_id')),
-                mgl_name: this.thesis.mgl_name,
-                eng_name: this.thesis.eng_name,
-                content: this.thesis.content,
-                requirement: this.thesis.requirement,
-            };
-            console.log('body', body);
-            this.thesisService.updateThesis(body).subscribe((response) => {
-                this.messageService.add({
-                    severity: 'success',
-                    summary: 'Successful',
-                    detail: response.message,
-                    life: 3000,
-                });
-                if (response.status === true) {
-                    console.log(response.body);
-                    this.thesises = [...response.body];
-                }
-            });
-            this.thesis = {};
-            this.thesisDialog = false;
-        } else {
-            this.submitted = true;
-
-            const body = {
-                status: 1,
-                teacher_id: Number(localStorage.getItem('user_id')),
-                mgl_name: this.thesis.mgl_name,
-                eng_name: this.thesis.eng_name,
-                content: this.thesis.content,
-                requirement: this.thesis.requirement,
-            };
-            console.log('body', body);
-            this.thesisService.createThesis(body).subscribe((response) => {
-                this.messageService.add({
-                    severity: 'success',
-                    summary: 'Successful',
-                    detail: response.message,
-                    life: 3000,
-                });
-                if (response.status === true) {
-                    this.thesises.push(response.body);
-                }
-            });
-            this.thesis = {};
-            this.thesisDialog = false;
-        }
-    }
-
-    deleteThesis(thesis) {
+    comfirmReguest(thesis, request) {
+        console.log('-----------------------', thesis);
         this.submitted = true;
-        this.thesisService.deleteThesis(thesis.id).subscribe((response) => {
-            console.log('response: ', response);
+
+        const body = {
+            thesis_id: thesis.id,
+            status: 3,
+            teacher_id: Number(localStorage.getItem('user_id')),
+            student_id: request.id,
+        };
+        console.log('body', body);
+        this.processService.insertComfirmRequest(body).subscribe((response) => {
             this.messageService.add({
                 severity: 'success',
                 summary: 'Successful',
                 detail: response.message,
                 life: 3000,
             });
+
             if (response.status === true) {
-                this.thesises = [...response.body];
             }
         });
-
-        console.log('this.selectedThesis: ', this.selectedThesis);
-        this.thesis = {};
-        this.thesisDialog = false;
-    }
-
-    deleteThesiss() {
-        this.submitted = true;
-        const ids = this.selectedThesis.map((i) => {
-            return i.id;
-        });
-
-        this.thesisService
-            .deleteAllThesiss({
-                ids: ids,
-            })
-            .subscribe((response) => {
-                console.log('response: ', response);
-                this.messageService.add({
-                    severity: 'success',
-                    summary: 'Successful',
-                    detail: response.message,
-                    life: 3000,
-                });
-                if (response.status === true) {
-                    this.thesises = [...response.body];
-                }
-            });
-
-        console.log('this.selectedThesis: ', this.selectedThesis);
         this.thesis = {};
         this.thesisDialog = false;
     }

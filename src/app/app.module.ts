@@ -13,10 +13,11 @@ import { NodeService } from './demo/service/node.service';
 import { PhotoService } from './demo/service/photo.service';
 import { PagesModule } from './src/pages/pages.module';
 import { HttpClientModule } from '@angular/common/http';
-
+import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+const config: SocketIoConfig = { url: 'http://localhost:8988', options: {} };
 @NgModule({
     declarations: [AppComponent, NotfoundComponent],
-    imports: [AppRoutingModule, AppLayoutModule,PagesModule,HttpClientModule],
+    imports: [AppRoutingModule, AppLayoutModule, PagesModule, HttpClientModule],
     providers: [
         { provide: LocationStrategy, useClass: PathLocationStrategy },
         CountryService,

@@ -25,12 +25,10 @@ import { RatingModule } from 'primeng/rating';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { DialogModule } from 'primeng/dialog';
 import { FormsModule } from '@angular/forms';
-import { ThesisService } from 'src/app/services/thesis.service';
 import { AllThesis } from 'src/app/interfaces/allThesis';
-import { StudentService } from 'src/app/services/student.service';
-
+import { ProcessService } from 'src/app/services/process.service';
 @Component({
-    selector: 'app-student',
+    selector: 'app-process',
     standalone: true,
     imports: [
         CommonModule,
@@ -60,15 +58,15 @@ import { StudentService } from 'src/app/services/student.service';
         DialogModule,
     ],
     providers: [MessageService],
-    templateUrl: './student.component.html',
-    styleUrl: './student.component.scss',
+    templateUrl: './process.component.html',
+    styleUrl: './process.component.scss',
 })
-export class StudentComponent implements OnInit {
+export class ProcessComponent {
     thesis: AllThesis = {};
     thesises: AllThesis[] = [];
     showThesis: AllThesis[] = [];
-
-    showRegDialog: boolean = false;
+    var;
+    showProcessDialog: boolean = false;
 
     deleteProductDialog: boolean = false;
 
@@ -90,55 +88,38 @@ export class StudentComponent implements OnInit {
 
     constructor(
         private messageService: MessageService,
-        private studentService: StudentService
+        private processService: ProcessService
     ) {}
 
     ngOnInit(): void {
-        this.studentService.getConfThesis().subscribe((data: any) => {
-            console.log('data: ', data);
-            this.thesises = data.body;
-            console.log(this.thesises);
-        });
+        if (Number(localStorage.getItem('type')) == 0) {
+            this.processService
+                .getProcessStudent(localStorage.getItem('user_id'))
+                .subscribe((data: any) => {
+                    console.log('data: ', data);
+                    this.thesises = data.body;
+                    console.log(this.thesises);
+                });
+        } else if (Number(localStorage.getItem('type')) == 2) {
+            this.processService
+                .getProcessTeaacher(localStorage.getItem('user_id'))
+                .subscribe((data: any) => {
+                    console.log('data: ', data);
+                    this.thesises = data.body;
+                    console.log(this.thesises);
+                });
+        } else {
+            this.processService.getProcessAll().subscribe((data: any) => {
+                console.log('data: ', data);
+                this.thesises = data.body;
+                console.log(this.thesises);
+            });
+        }
     }
 
-    myShowReqModul() {
+    editProcess() {
         this.product = {};
         this.submitted = false;
-        this.showRegDialog = true;
-        this.studentService
-            .myShowRequest(localStorage.getItem('user_id'))
-            .subscribe((data: any) => {
-                console.log('data: ', data);
-                this.showThesis = data.body;
-                console.log(this.showThesis);
-            });
-    }
-
-    deleteselectedThesis() {
-        this.deleteProductsDialog = true;
-    }
-
-    comfirmOffThesis(thesis) {
-        this.submitted = true;
-
-        const body = {
-            thesis_id: thesis.id,
-            student_id: Number(localStorage.getItem('user_id')),
-            teacher_id: thesis.teacher_id,
-        };
-        console.log('body', body);
-
-        this.studentService.updateReqThesis(body).subscribe((response) => {
-            this.messageService.add({
-                severity: 'success',
-                summary: 'Successful',
-                detail: response.message,
-                life: 3000,
-            });
-
-            this.ngOnInit();
-        });
-        this.thesis = {};
-        this.showRegDialog = false;
+        this.showProcessDialog = true;
     }
 }

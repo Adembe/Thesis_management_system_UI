@@ -6,6 +6,7 @@ import { ThesisComponent } from './thesis/thesis.component';
 import { ThesisOfficeComponent } from './thesis-office/thesis-office.component';
 import { AdminComponent } from './admin/admin.component';
 import { ApplyStudentComponent } from './apply-student/apply-student.component';
+import { ProcessComponent } from './process/process.component';
 const routes: Routes = [
     { path: 'student', component: StudentComponent },
     { path: 'order_admin', component: OrderAdminComponent },
@@ -13,6 +14,7 @@ const routes: Routes = [
     { path: 'thesis-office', component: ThesisOfficeComponent },
     { path: 'admin', component: AdminComponent },
     { path: 'apply-student', component: ApplyStudentComponent },
+    { path: 'process', component: ProcessComponent },
 ];
 
 @NgModule({

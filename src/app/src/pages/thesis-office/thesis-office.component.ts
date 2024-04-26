@@ -105,7 +105,7 @@ export class ThesisOfficeComponent {
         const body = {
             id: thesis.id,
             status: 0,
-            teacher_id: Number(localStorage.getItem('user_id')),
+            teacher_id: thesis.teacher_id,
             mgl_name: thesis.mgl_name,
             eng_name: thesis.eng_name,
             content: thesis.content,
@@ -132,7 +132,7 @@ export class ThesisOfficeComponent {
         const body = {
             id: thesis.id,
             status: 2,
-            teacher_id: Number(localStorage.getItem('user_id')),
+            teacher_id: thesis.teacher_id,
             mgl_name: thesis.mgl_name,
             eng_name: thesis.eng_name,
             content: thesis.content,

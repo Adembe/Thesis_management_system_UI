@@ -30,6 +30,11 @@ export class AppMenuComponent implements OnInit {
                                 icon: 'pi pi-fw pi-id-card',
                                 routerLink: ['/pages/student'],
                             },
+                            {
+                                label: 'Process',
+                                icon: 'pi pi-fw pi-id-card',
+                                routerLink: ['/pages/process'],
+                            },
                         ],
                     },
                 ];
@@ -54,6 +59,11 @@ export class AppMenuComponent implements OnInit {
                                 icon: 'pi pi-fw pi-id-card',
                                 routerLink: ['/pages/admin'],
                             },
+                            {
+                                label: 'Process',
+                                icon: 'pi pi-fw pi-id-card',
+                                routerLink: ['/pages/process'],
+                            },
                         ],
                     },
                 ];
@@ -77,6 +87,11 @@ export class AppMenuComponent implements OnInit {
                                 label: 'Apply Student',
                                 icon: 'pi pi-fw pi-id-card',
                                 routerLink: ['/pages/apply-student'],
+                            },
+                            {
+                                label: 'Process',
+                                icon: 'pi pi-fw pi-id-card',
+                                routerLink: ['/pages/process'],
                             },
                         ],
                     },

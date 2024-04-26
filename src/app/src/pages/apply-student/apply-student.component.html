@@ -181,12 +181,12 @@
                         <td></td>
                     </tr>
                 </ng-template>
-                <ng-template pTemplate="rowexpansion" let-product>
+                <ng-template pTemplate="rowexpansion" let-thesis>
                     <tr>
                         <td colspan="7">
                             <div class="p-3">
                                 <p-table
-                                    [value]="product.applied_studets"
+                                    [value]="thesis.applied_studets"
                                     dataKey="id"
                                 >
                                     <ng-template pTemplate="header">
@@ -243,7 +243,9 @@
                                                         icon="pi pi-times"
                                                         class="p-button-rounded p-button-success mr-2"
                                                         (click)="
-                                                            editThesis(thesis)
+                                                            unConfirmRequest(
+                                                                thesis
+                                                            )
                                                         "
                                                     ></button>
                                                     <button
@@ -252,7 +254,10 @@
                                                         icon="pi pi-check"
                                                         class="p-button-rounded p-button-warning"
                                                         (click)="
-                                                            deleteThesis(thesis)
+                                                            comfirmReguest(
+                                                                thesis,
+                                                                request
+                                                            )
                                                         "
                                                     ></button>
                                                 </div>
