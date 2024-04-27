@@ -2,35 +2,51 @@
     <div class="col-4">
         <div class="flex flex-row card px-0">
             <div class="col">
-                <span>sedwiin ner</span>
-                <div class="row card my-2 py-3">asd</div>
+                <span>Удирдагч Багш</span>
+                <div class="flex flex-row card my-2 py-3">
+                    {{ thesis?.teacher_name }}
+                </div>
             </div>
             <div class="col">
-                <span>sedwiin ner</span>
-                <div class="row card my-2 py-3">asd</div>
+                <span>Сэдвийн нэр</span>
+                <div class="flex flex-row card my-2 py-3">
+                    {{ thesis?.thesis_name }}
+                </div>
             </div>
         </div>
         <div class="flex flex-column card">
-            <div class="row mb-3 font-medium text-lg">test 1</div>
-            <div class="flex flex-row justify-content-around card py-3">
-                <span>Name</span>
+            <div class="row mb-3 font-medium text-lg">Үнэлгээ</div>
+            <div class="flex flex-row justify-content-between card py-3">
+                <span>Явц-1</span>
 
-                <div class="row">asd</div>
+                <div class="row">{{ thesis?.process1 }}</div>
             </div>
-            <div class="flex flex-row justify-content-around card py-3">
-                <span>Name</span>
+            <div class="flex flex-row justify-content-between card py-3">
+                <span>Явц-2</span>
 
-                <div class="row">asd</div>
+                <div class="row">{{ thesis?.process2 }}</div>
             </div>
-            <div class="flex flex-row justify-content-around card py-3">
-                <span>Name</span>
+            <div class="flex flex-row justify-content-between card py-3">
+                <span>Урьдчилсан хамгаалалт</span>
 
-                <div class="row">asd</div>
+                <div class="row">{{ thesis?.process3 }}</div>
             </div>
-            <div class="flex flex-row justify-content-around card py-3">
-                <span>Name</span>
+            <div class="flex flex-row justify-content-between card py-3">
+                <span>Жинхэнэ хамгаалалт</span>
 
-                <div class="row">asd</div>
+                <div class="row">{{ thesis?.process4 }}</div>
+            </div>
+            <div class="flex flex-row justify-content-between card py-3">
+                <span>Дүн</span>
+
+                <div class="row">
+                    {{
+                        thesis.process1 +
+                            thesis.process2 +
+                            thesis.process3 +
+                            thesis.process4
+                    }}
+                </div>
             </div>
         </div>
         <div class="row text-center">
@@ -51,6 +67,10 @@
             <p-table
                 [value]="processDetail"
                 [tableStyle]="{ 'min-width': '50rem' }"
+                selectionMode="single"
+                [(selection)]="selectedDetail"
+                (onRowSelect)="onRowSelect($event)"
+                dataKey="feedback"
             >
                 <ng-template pTemplate="header">
                     <tr>
@@ -65,7 +85,7 @@
                     let-processDetail
                     let-rowIndex="rowIndex"
                 >
-                    <tr>
+                    <tr [pSelectableRow]="processDetail">
                         <td style="width: 10%">{{ rowIndex + 1 }}</td>
                         <td>{{ processDetail.file_name }}</td>
                         <td>{{ processDetail.created }}</td>
@@ -83,13 +103,10 @@
             </p-table>
         </div>
         <div class="card">
-            <div class="card"></div>
-            <div class="card">
-                <p-editor
-                    [(ngModel)]="text"
-                    [style]="{ height: '320px' }"
-                ></p-editor>
-            </div>
+            <p-editor
+                [(ngModel)]="text"
+                [style]="{ height: '320px' }"
+            ></p-editor>
         </div>
     </div>
     <p-dialog
@@ -100,6 +117,7 @@
         class="p-fluid"
     >
         <iframe
+            *ngIf="pdfUrl"
             [src]="pdfUrl"
             style="width: 100%; height: 100%"
             frameborder="0"

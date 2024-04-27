@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { AutoCompleteModule } from 'primeng/autocomplete';
@@ -23,21 +23,14 @@ import { ToolbarModule } from 'primeng/toolbar';
 import { RatingModule } from 'primeng/rating';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { DialogModule } from 'primeng/dialog';
-import {
-    FormBuilder,
-    FormControl,
-    FormGroup,
-    FormsModule,
-    Validators,
-} from '@angular/forms';
-import { AllThesis } from 'src/app/interfaces/allThesis';
+import { FormBuilder, FormGroup, FormsModule } from '@angular/forms';
 import { ProcessService } from 'src/app/services/process.service';
 import { lastValueFrom } from 'rxjs';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { ReactiveFormsModule } from '@angular/forms'; // Import ReactiveFormsModule
-import { BrowserModule } from '@angular/platform-browser';
+import { ReactiveFormsModule } from '@angular/forms';
 import { EditorModule } from 'primeng/editor';
-import Quill from 'quill';
+import { Process } from 'src/app/interfaces/process';
+import { AnimateTimings } from '@angular/animations';
 @Component({
     selector: 'app-process',
     standalone: true,
@@ -76,14 +69,12 @@ import Quill from 'quill';
     styleUrl: './process.component.scss',
 })
 export class ProcessComponent {
-    thesis: AllThesis = {};
-    thesises: AllThesis[] = [];
-    showThesis: AllThesis[] = [];
+    thesis: Process = {};
+    thesises: Process[] = [];
     processDetail: any[] = [];
     showProcessDialog: boolean = false;
     formGroup: FormGroup | undefined;
     deleteProductDialog: boolean = false;
-
     deleteProductsDialog: boolean = false;
 
     products: Product[] = [];
@@ -91,7 +82,7 @@ export class ProcessComponent {
     product: Product = {};
 
     selectedThesis: Product[] = [];
-
+    selectedDetail: any;
     submitted: boolean = false;
     showRegDialog: boolean = false;
 
@@ -109,9 +100,6 @@ export class ProcessComponent {
         private fb: FormBuilder
     ) {}
     async ngOnInit() {
-        // var quill = new Quill('#editor-container', {
-        //     theme: 'snow',
-        // });
         if (Number(localStorage.getItem('type')) == 0) {
             const res = await lastValueFrom(
                 this.processService.getProcessStudent(
@@ -120,20 +108,16 @@ export class ProcessComponent {
             );
             console.log('res', res);
             if (res.status == true) {
-                this.thesis = res.body;
+                this.thesis = res.body[0];
                 console.log('thsis', this.thesis);
                 const res1 = await lastValueFrom(
-                    this.processService.getProcessDetail(this.thesis[0].id)
+                    this.processService.getProcessDetail(this.thesis.id)
                 );
                 if (res1.status == true) {
                     this.processDetail = res1.body;
+                    console.log('this.processDetail', this.processDetail);
                 }
             }
-            // .subscribe((data: any) => {
-            //     console.log('data: ', data);
-            //     this.thesis = data.body;
-            //     console.log(this.thesises);
-            // });
         } else if (Number(localStorage.getItem('type')) == 2) {
             this.processService
                 .getProcessTeaacher(localStorage.getItem('user_id'))
@@ -164,10 +148,10 @@ export class ProcessComponent {
         const formData = new FormData();
         if (file) {
             formData.append('pdf', file);
-            formData.append('processId', this.thesis[0].id.toString());
-            formData.append('thesisId', this.thesis[0].thesis_id.toString());
-            formData.append('studentId', this.thesis[0].student_id.toString());
-            formData.append('teacherId', this.thesis[0].teacher_id.toString());
+            formData.append('processId', this.thesis.id.toString());
+            formData.append('thesisId', this.thesis.thesis_id.toString());
+            formData.append('studentId', this.thesis.student_id.toString());
+            formData.append('teacherId', this.thesis.teacher_id.toString());
             formData.append('fileName', file.name);
         }
         this.processService
@@ -189,6 +173,10 @@ export class ProcessComponent {
             });
     }
 
+    onRowSelect(event) {
+        console.log('event-', event);
+        this.text = event.data.feedback;
+    }
     // This function converts a byte array to a Blob
     convertByteArrayToBlob(byteArray: Uint8Array, contentType: string): Blob {
         return new Blob([byteArray], { type: contentType });

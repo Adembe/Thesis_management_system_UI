@@ -17,7 +17,12 @@ export class ProcessService {
     }
 
     insertProcessDetail(thesis: any): Observable<any> {
-        return this.http.post<any>(this.apiUrl + '/detail/', thesis);
+        return this.http.post<any>(this.apiUrl + '/detail/', thesis).pipe(
+            timeout(30000), // 30000 milliseconds = 30 seconds
+            catchError((error) => {
+                return throwError(error);
+            })
+        );
     }
 
     getProcessStudent(id: any): Observable<any> {
