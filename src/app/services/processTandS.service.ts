@@ -25,4 +25,8 @@ export class ProcessTandSService {
     updateAllPoint(pointAll: any): Observable<any> {
         return this.http.put<any>(this.apiUrl + '/all', pointAll);
     }
+
+    updateFeedback(feedback: any): Observable<any> {
+        return this.http.put<any>(this.apiUrl + '/teacher', feedback);
+    }
 }

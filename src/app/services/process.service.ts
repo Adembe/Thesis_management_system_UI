@@ -46,6 +46,6 @@ export class ProcessService {
     }
 
     updateFeedback(feedback: any): Observable<any> {
-        return this.http.put<any>(this.apiUrl, feedback);
+        return this.http.put<any>(this.apiUrl + '/student', feedback);
     }
 }

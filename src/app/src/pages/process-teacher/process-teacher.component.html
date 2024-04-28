@@ -145,8 +145,16 @@
                                     pButton
                                     pRipple
                                     icon="pi pi-pencil"
-                                    class="p-button-rounded p-button-success mr-2"
+                                    class="p-button-rounded p-button-primary mr-2"
                                     (click)="editProcess(thesis)"
+                                ></button>
+                                <button
+                                    *ngIf="isShowPButton"
+                                    pButton
+                                    pRipple
+                                    icon="pi pi-folder-open"
+                                    class="p-button-rounded p-button-success mr-2"
+                                    (click)="openProcess(thesis)"
                                 ></button>
                             </div>
                         </td>
@@ -267,6 +275,88 @@
                     (click)="saveProcessOne(2)"
                 ></button>
             </ng-template>
+        </p-dialog>
+        <!-- Techer show student Process -->
+        <p-dialog
+            [(visible)]="showProcessTeacher"
+            [style]="{ width: '600px', height: '800px' }"
+            header="Явц-1-ын үнэлгээг оруулна уу?"
+            [modal]="true"
+            class="p-fluid"
+        >
+            <div class="card">
+                <p-table
+                    [value]="processDetail"
+                    [tableStyle]="{ 'min-width': '50rem' }"
+                    selectionMode="single"
+                    [(selection)]="selectedDetail"
+                    (onRowSelect)="onRowSelect($event)"
+                    dataKey="id"
+                >
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th style="width: 20px">№</th>
+                            <th>Нэр</th>
+                            <th>Огноо</th>
+                            <th></th>
+                        </tr>
+                    </ng-template>
+                    <ng-template
+                        pTemplate="body"
+                        let-processDetail
+                        let-rowIndex="rowIndex"
+                    >
+                        <tr [pSelectableRow]="processDetail">
+                            <td style="width: 10%">{{ rowIndex + 1 }}</td>
+                            <td>{{ processDetail.file_name }}</td>
+                            <td>{{ processDetail.created }}</td>
+                            <td>
+                                <button
+                                    pButton
+                                    pRipple
+                                    icon="pi pi-eye"
+                                    class="p-button-rounded mr-2 p-button-primery"
+                                    (click)="ViewPdf(processDetail)"
+                                ></button>
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+            <div class="card">
+                <p-editor
+                    [(ngModel)]="text"
+                    [style]="{ height: '320px' }"
+                ></p-editor>
+                <div class="flex flex-row-reverse my-2">
+                    <div style="min-width: 30px">
+                        <button
+                            ngClass="flex flex-row-reverse"
+                            pButton
+                            pRipple
+                            icon="pi pi-caret-right"
+                            class="p-button-rounded mr-2 p-button-primery"
+                            (click)="sentFeedback()"
+                        >
+                            Submit
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </p-dialog>
+        <p-dialog
+            [(visible)]="showRegDialog"
+            [style]="{ width: '90%', height: '90%' }"
+            header="Миний илгээсэн хүсэлтүүд"
+            [modal]="true"
+            class="p-fluid"
+        >
+            <iframe
+                *ngIf="pdfUrl"
+                [src]="pdfUrl"
+                style="width: 100%; height: 100%"
+                frameborder="0"
+            ></iframe>
         </p-dialog>
     </div>
 </div>

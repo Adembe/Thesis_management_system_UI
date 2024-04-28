@@ -100,38 +100,22 @@ export class ProcessComponent {
         private fb: FormBuilder
     ) {}
     async ngOnInit() {
-        if (Number(localStorage.getItem('type')) == 0) {
-            const res = await lastValueFrom(
-                this.processService.getProcessStudent(
-                    localStorage.getItem('user_id')
-                )
+        const res = await lastValueFrom(
+            this.processService.getProcessStudent(
+                localStorage.getItem('user_id')
+            )
+        );
+        console.log('res', res);
+        if (res.status == true) {
+            this.thesis = res.body[0];
+            console.log('thsis', this.thesis);
+            const res1 = await lastValueFrom(
+                this.processService.getProcessDetail(this.thesis.id)
             );
-            console.log('res', res);
-            if (res.status == true) {
-                this.thesis = res.body[0];
-                console.log('thsis', this.thesis);
-                const res1 = await lastValueFrom(
-                    this.processService.getProcessDetail(this.thesis.id)
-                );
-                if (res1.status == true) {
-                    this.processDetail = res1.body;
-                    console.log('this.processDetail', this.processDetail);
-                }
+            if (res1.status == true) {
+                this.processDetail = res1.body;
+                console.log('this.processDetail', this.processDetail);
             }
-        } else if (Number(localStorage.getItem('type')) == 2) {
-            this.processService
-                .getProcessTeaacher(localStorage.getItem('user_id'))
-                .subscribe((data: any) => {
-                    console.log('data: ', data);
-                    this.thesises = data.body;
-                    console.log(this.thesises);
-                });
-        } else {
-            this.processService.getProcessAll().subscribe((data: any) => {
-                console.log('data: ', data);
-                this.thesises = data.body;
-                console.log(this.thesises);
-            });
         }
     }
 
