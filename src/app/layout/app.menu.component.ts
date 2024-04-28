@@ -15,7 +15,7 @@ export class AppMenuComponent implements OnInit {
         let userType = localStorage.getItem('type');
 
         switch (userType.toString()) {
-            case '0'://student
+            case '0': //student
                 this.model = [
                     {
                         label: 'Цэс',
@@ -39,7 +39,7 @@ export class AppMenuComponent implements OnInit {
                     },
                 ];
                 break;
-            case '1'://admin
+            case '1': //admin
                 this.model = [
                     {
                         label: 'Цэс',
@@ -60,7 +60,7 @@ export class AppMenuComponent implements OnInit {
                                 routerLink: ['/pages/admin'],
                             },
                             {
-                                label: 'Явц',//ProcessTeacher
+                                label: 'Явц', //ProcessTeacher
                                 icon: 'pi pi-fw pi-id-card',
                                 routerLink: ['/pages/process-teacher'],
                             },
@@ -79,17 +79,17 @@ export class AppMenuComponent implements OnInit {
                                 routerLink: ['/'],
                             },
                             {
-                                label: 'Thesis',
+                                label: 'Дэвшүүлсэн сэдвүүд',
                                 icon: 'pi pi-fw pi-id-card',
                                 routerLink: ['/pages/thesis'],
                             },
                             {
-                                label: 'Apply Student',
+                                label: 'Ирсэн хүсэлтүүд',
                                 icon: 'pi pi-fw pi-id-card',
                                 routerLink: ['/pages/apply-student'],
                             },
                             {
-                                label: 'ProcessTeacher',
+                                label: 'Явц',
                                 icon: 'pi pi-fw pi-id-card',
                                 routerLink: ['/pages/process-teacher'],
                             },
