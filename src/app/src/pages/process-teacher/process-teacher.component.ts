@@ -66,6 +66,7 @@ export class ProcessTeacherComponent {
     thesises: AllThesis[] = [];
     showThesis: AllThesis[] = [];
     showProcessDialog: boolean = false;
+    showProcessAllDialog: boolean = false;
     processDetail: any[] = [];
     deleteProductDialog: boolean = false;
     selectedDetail: any;
@@ -85,6 +86,9 @@ export class ProcessTeacherComponent {
 
     rowsPerPageOptions = [5, 10, 20];
     process1: any;
+    process2: any;
+    process3: any;
+    process4: any;
     constructor(
         private messageService: MessageService,
         private processTandService: ProcessTandSService
@@ -109,22 +113,56 @@ export class ProcessTeacherComponent {
     }
 
     editProcess(thesis) {
-        this.thesis = thesis;
-        this.showProcessDialog = true;
+        if (Number(localStorage.getItem('type')) == 2) {
+            this.thesis = thesis;
+            this.showProcessDialog = true;
+        } else {
+            this.thesis = thesis;
+            this.showProcessAllDialog = true;
+        }
+    }
+    hideDialog() {
+        if (this.showProcessDialog == true) {
+            this.showProcessDialog = false;
+        } else {
+            this.showProcessAllDialog = false;
+        }
     }
 
-    saveProcessOne() {
-        const body = {
-            id: this.thesis.id,
-            process1: Number(this.process1),
-        };
-        console.log('body', body);
-        this.processTandService.updateFeedback(body).subscribe((response) => {
-            console.log('data: ', response);
-            if (response.status === true) {
-                this.ngOnInit();
-                this.showProcessDialog = false;
-            }
-        });
+    saveProcessOne(type) {
+        if (type == 1) {
+            const body = {
+                id: this.thesis.id,
+                process1: Number(this.process1),
+            };
+            console.log('body', body);
+            this.processTandService
+                .updateFeedback(body)
+                .subscribe((response) => {
+                    console.log('data: ', response);
+                    if (response.status === true) {
+                        this.ngOnInit();
+                        this.showProcessDialog = false;
+                    }
+                });
+        } else {
+            const body = {
+                id: this.thesis.id,
+                process1: this.thesis.process1,
+                process2: this.thesis.process2,
+                process3: this.thesis.process3,
+                process4: this.thesis.process4,
+            };
+            console.log('body', body);
+            this.processTandService
+                .updateFeedback(body)
+                .subscribe((response) => {
+                    console.log('data: ', response);
+                    if (response.status === true) {
+                        this.ngOnInit();
+                        this.showProcessAllDialog = false;
+                    }
+                });
+        }
     }
 }

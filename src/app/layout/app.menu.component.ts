@@ -60,9 +60,9 @@ export class AppMenuComponent implements OnInit {
                                 routerLink: ['/pages/admin'],
                             },
                             {
-                                label: 'Process',
+                                label: 'ProcessTeacher',
                                 icon: 'pi pi-fw pi-id-card',
-                                routerLink: ['/pages/process'],
+                                routerLink: ['/pages/process-teacher'],
                             },
                         ],
                     },
