@@ -180,6 +180,7 @@ export class ProcessComponent {
                         summary: 'Success',
                         detail: 'File Uploaded with Basic Mode',
                     });
+                    this.ngOnInit();
                 } else {
                     this.messageService.add({
                         severity: 'info',
