@@ -118,7 +118,7 @@ export class StudentComponent implements OnInit {
         this.deleteProductsDialog = true;
     }
 
-    comfirmOffThesis(thesis) {
+    Sentrequest(thesis) {
         this.submitted = true;
 
         const body = {
@@ -129,14 +129,23 @@ export class StudentComponent implements OnInit {
         console.log('body', body);
 
         this.studentService.updateReqThesis(body).subscribe((response) => {
-            this.messageService.add({
-                severity: 'success',
-                summary: 'Successful',
-                detail: response.message,
-                life: 3000,
-            });
-
-            this.ngOnInit();
+            console.log('fsefsef', response);
+            if (response.status === true) {
+                this.messageService.add({
+                    severity: 'success',
+                    summary: 'Successful',
+                    detail: response.message,
+                    life: 3000,
+                });
+                this.ngOnInit();
+            } else {
+                this.messageService.add({
+                    severity: 'warn',
+                    summary: 'Warning',
+                    detail: response.message,
+                    life: 3000,
+                });
+            }
         });
         this.thesis = {};
         this.showRegDialog = false;
