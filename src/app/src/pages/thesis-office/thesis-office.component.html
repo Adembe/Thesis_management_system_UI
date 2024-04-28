@@ -80,31 +80,34 @@
                 >
                     <tr>
                         <td>{{ rowIndex + 1 }}</td>
-                        <td style="width: 25%; min-width: 10rem">
+                        <td style="width: 15%; min-width: 10rem">
                             <span class="p-column-title" style="width: 30px"
                                 >Id</span
                             >
                             {{ thesis?.lname }}
                         </td>
-                        <td style="width: 25%; min-width: 10rem">
+                        <td style="width: 20%; min-width: 10rem">
                             <span class="p-column-title">Id1</span>
                             {{ thesis?.mgl_name }}
                         </td>
-                        <td style="width: 25%; min-width: 10rem">
+                        <td style="width: 15%; min-width: 10rem">
                             <span class="p-column-title">Description</span>
                             {{ thesis?.eng_name }}
                         </td>
-                        <td style="width: 25%; min-width: 8rem">
+                        <td style="width: 15%; min-width: 8rem">
                             <span class="p-column-title">Price</span>
                             {{ thesis?.content }}
                         </td>
-                        <td style="width: 25%; min-width: 8rem">
+                        <td style="width: 20%; min-width: 8rem">
                             <span class="p-column-title">Price</span>
                             {{ thesis?.requirement }}
                         </td>
                         <td style="width: 25%; min-width: 8rem">
                             <span class="p-column-title">Price</span>
-                            <ng-container
+                            <span *ngIf="thesis?.status == 0" class="customer-badge status-unqualified">Цуцлагдсан</span>
+                            <span *ngIf="thesis?.status == 2" class="customer-badge status-qualified">Баталгаажсан</span>
+                            <span *ngIf="thesis?.status != 2 && thesis?.status != 0" class="customer-badge status-new">Хүлээгдэж байна</span>
+                            <!-- <ng-container
                                 *ngIf="thesis?.status == 2; else otherStatus"
                             >
                                 <span>Баталгаажсан</span>
@@ -121,7 +124,7 @@
                             </ng-template>
                             <ng-template #nonConfirmed>
                                 <span>Хүлээгдэж байна</span>
-                            </ng-template>
+                            </ng-template> -->
                         </td>
 
                         <td>

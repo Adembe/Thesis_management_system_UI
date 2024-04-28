@@ -96,6 +96,10 @@
                             Төлөв
                             <p-sortIcon field="status"></p-sortIcon>
                         </th>
+                        <th pSortableColumn="status">
+                            Явц
+                            <p-sortIcon field="status"></p-sortIcon>
+                        </th>
                         <th></th>
                     </tr>
                 </ng-template>
@@ -104,42 +108,71 @@
                         <td>
                             <p-tableCheckbox [value]="thesis"></p-tableCheckbox>
                         </td>
-                        <td style="width: 25%; min-width: 10rem">
+                        <td>
                             <span class="p-column-title">Id</span>
                             {{ thesis?.mgl_name }}
                         </td>
-                        <td style="width: 25%; min-width: 10rem">
+                        <td>
                             <span class="p-column-title">Description</span>
                             {{ thesis?.eng_name }}
                         </td>
-                        <td style="width: 25%; min-width: 8rem">
+                        <td>
                             <span class="p-column-title">Price</span>
                             {{ thesis?.content }}
                         </td>
-                        <td style="width: 25%; min-width: 8rem">
+                        <td>
                             <span class="p-column-title">Price</span>
                             {{ thesis?.requirement }}
                         </td>
-                        <td style="width: 25%; min-width: 8rem">
+                        <td>
                             <span class="p-column-title">Price</span>
-                            <ng-container
-                                *ngIf="thesis?.status == 2; else otherStatus"
+                            <span
+                                *ngIf="thesis?.status == 0"
+                                class="customer-badge status-unqualified"
+                                >Цуцлагдсан</span
                             >
-                                <span>Баталгаажсан</span>
-                            </ng-container>
-                            <ng-template #otherStatus>
-                                <ng-container
-                                    *ngIf="
-                                        thesis?.status == 0;
-                                        else nonConfirmed
-                                    "
-                                >
-                                    <span>Цуцлагдсан</span>
-                                </ng-container>
-                            </ng-template>
-                            <ng-template #nonConfirmed>
-                                <span>Хүлээгдэж байна</span>
-                            </ng-template>
+                            <span
+                                *ngIf="thesis?.status == 1"
+                                class="customer-badge status-new"
+                                >Хүлээгдэж байна</span
+                            >
+                            <span
+                                *ngIf="thesis?.status == 2"
+                                class="customer-badge status-proposal"
+                                >Баталгаажсан</span
+                            >
+                            <span
+                                *ngIf="thesis?.status == 3"
+                                class="customer-badge status-qualified"
+                                >Сонгогдсон</span
+                            >
+                        </td>
+                        <td>
+                            <p-progressBar
+                                *ngIf="thesis?.status == 0"
+                                value="0"
+                                [showValue]="false"
+                                [style]="{ height: '0.8rem' }"
+                            ></p-progressBar>
+                            <p-progressBar
+                                *ngIf="thesis?.status == 1"
+                                value="10"
+                                [showValue]="false"
+                                [style]="{ height: '0.8rem' }"
+                            ></p-progressBar>
+                            <p-progressBar
+                                *ngIf="thesis?.status == 2"
+                                value="40"
+                                [showValue]="false"
+                                [style]="{ height: '0.8rem' }"
+                            ></p-progressBar>
+                            <p-progressBar
+                                *ngIf="thesis?.status == 3"
+                                value="60"
+                                [showValue]="false"
+                                [style]="{ height: '0.8rem' }"
+                            ></p-progressBar>
+                            
                         </td>
                         <td>
                             <div class="flex">
@@ -172,7 +205,7 @@
         >
             <ng-template pTemplate="content">
                 <div class="field">
-                    <label for="subject_name_mgl">Сэдвийн нэр Монгол</label>
+                    <label for="subject_name_mgl">Сэдвийн нэр (Монгол)</label>
                     <input
                         type="text"
                         pInputText
@@ -184,14 +217,14 @@
                             'ng-invalid ng-dirty': submitted && !thesis.mgl_name
                         }"
                     />
-                    <small
+                    <!-- <small
                         class="ng-dirty ng-invalid"
                         *ngIf="submitted && !thesis.mgl_name"
                         >Сэдвийн Монгол нэр хоосон байна.</small
-                    >
+                    > -->
                 </div>
                 <div class="field">
-                    <label for="subject_name_eng">Сэдвийн нэр Англи</label>
+                    <label for="subject_name_eng">Сэдвийн нэр (Англи)</label>
                     <input
                         type="text"
                         pInputText
@@ -203,11 +236,11 @@
                             'ng-invalid ng-dirty': submitted && !thesis.eng_name
                         }"
                     />
-                    <small
+                    <!-- <small
                         class="ng-dirty ng-invalid"
                         *ngIf="submitted && !thesis.eng_name"
                         >Сэдвийн Англи нэр хоосон байна.</small
-                    >
+                    > -->
                 </div>
                 <div class="field">
                     <label for="content">Агуулга</label>
@@ -218,12 +251,15 @@
                         required
                         rows="3"
                         cols="20"
+                        [ngClass]="{
+                            'ng-invalid ng-dirty': submitted && !thesis.content
+                        }"
                     ></textarea>
-                    <small
+                    <!-- <small
                         class="ng-dirty ng-invalid"
                         *ngIf="submitted && !thesis.content"
                         >Агуулга хоосон байна.</small
-                    >
+                    > -->
                 </div>
                 <div class="field">
                     <label for="requirement">Шаардлага</label>
@@ -234,12 +270,16 @@
                         required
                         rows="3"
                         cols="20"
+                        [ngClass]="{
+                            'ng-invalid ng-dirty':
+                                submitted && !thesis.requirement
+                        }"
                     ></textarea>
-                    <small
+                    <!-- <small
                         class="ng-dirty ng-invalid"
                         *ngIf="submitted && !thesis.requirement"
                         >Шаардлага хоосон байна.</small
-                    >
+                    > -->
                 </div>
             </ng-template>
 

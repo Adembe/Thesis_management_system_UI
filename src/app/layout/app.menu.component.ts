@@ -26,12 +26,12 @@ export class AppMenuComponent implements OnInit {
                                 routerLink: ['/'],
                             },
                             {
-                                label: 'Student',
+                                label: 'Дэвшүүлэгдсэн сэдвүүд',
                                 icon: 'pi pi-fw pi-id-card',
                                 routerLink: ['/pages/student'],
                             },
                             {
-                                label: 'Process',
+                                label: 'Миний сэдэв',
                                 icon: 'pi pi-fw pi-id-card',
                                 routerLink: ['/pages/process'],
                             },

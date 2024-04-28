@@ -96,6 +96,20 @@ export class ApplyStudentComponent {
             .getRequestStudents(localStorage.getItem('user_id'))
             .subscribe((data: any) => {
                 console.log('data: ', data);
+
+                // const mySet = new Set();
+                // data.body.map((value)=>{
+                //     mySet.add(value.id)
+                // })
+                // let tempThesis = []
+                // mySet.forEach(id => {
+                //     tempThesis.push(
+                //         {
+
+                //         }
+                //     )
+                //   });
+                // console.log("my set:",mySet)
                 this.thesises = data.body;
             });
     }
@@ -112,14 +126,20 @@ export class ApplyStudentComponent {
         };
         console.log('body', body);
         this.processService.insertComfirmRequest(body).subscribe((response) => {
-            this.messageService.add({
-                severity: 'success',
-                summary: 'Successful',
-                detail: response.message,
-                life: 3000,
-            });
-
             if (response.status === true) {
+                this.messageService.add({
+                    severity: 'success',
+                    summary: 'Successful',
+                    detail: response.message,
+                    life: 3000,
+                });
+            } else {
+                this.messageService.add({
+                    severity: 'warning',
+                    summary: '',
+                    detail: response.message,
+                    life: 3000,
+                });
             }
         });
         this.thesis = {};

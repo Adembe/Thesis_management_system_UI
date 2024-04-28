@@ -29,6 +29,7 @@ import { DialogModule } from 'primeng/dialog';
 import { FormsModule } from '@angular/forms';
 import { ThesisService } from 'src/app/services/thesis.service';
 import { Thesis } from 'src/app/interfaces/thesis';
+import { ProgressBarModule } from 'primeng/progressbar';
 @Component({
     selector: 'app-thesis',
     standalone: true,
@@ -58,6 +59,7 @@ import { Thesis } from 'src/app/interfaces/thesis';
         RadioButtonModule,
         InputNumberModule,
         DialogModule,
+        ProgressBarModule
     ],
     providers: [MessageService],
     templateUrl: './thesis.component.html',
@@ -86,6 +88,7 @@ export class ThesisComponent {
     statuses: any[] = [];
 
     rowsPerPageOptions = [5, 10, 20];
+    isUpdate = false;
 
     constructor(
         private messageService: MessageService,
@@ -104,6 +107,7 @@ export class ThesisComponent {
     openNew() {
         this.product = {};
         this.submitted = false;
+        this.isUpdate = false;
         this.thesisDialog = true;
     }
 
@@ -113,6 +117,7 @@ export class ThesisComponent {
 
     editThesis(thesis: Thesis) {
         this.thesis = { ...thesis };
+        this.isUpdate = true;
         this.thesisDialog = true;
     }
 
@@ -149,14 +154,17 @@ export class ThesisComponent {
         this.submitted = false;
     }
 
-    saveThesis(isUpdate: boolean) {
-        console.log(isUpdate);
-        if (isUpdate === true) {
-            this.submitted = true;
+    saveThesis() {
+        this.submitted = true;
+        if(!this.thesis.mgl_name || !this.thesis.eng_name || !this.thesis.content || !this.thesis.requirement){
+            return;
+        }
+        console.log(this.isUpdate);
+        if (this.isUpdate === true) {
 
             const body = {
                 id: this.thesis.id,
-                status: 1,
+                status: this.thesis.status,
                 teacher_id: Number(localStorage.getItem('user_id')),
                 mgl_name: this.thesis.mgl_name,
                 eng_name: this.thesis.eng_name,
@@ -179,7 +187,6 @@ export class ThesisComponent {
             this.thesis = {};
             this.thesisDialog = false;
         } else {
-            this.submitted = true;
 
             const body = {
                 status: 1,
@@ -191,6 +198,7 @@ export class ThesisComponent {
             };
             console.log('body', body);
             this.thesisService.createThesis(body).subscribe((response) => {
+                console.log('response: ', response);
                 this.messageService.add({
                     severity: 'success',
                     summary: 'Successful',
