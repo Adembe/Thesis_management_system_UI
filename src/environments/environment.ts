@@ -4,7 +4,7 @@
 
 export const environment = {
     production: true,
-    apiUrl: 'https://thesis-management-system-api.onrender.com/api/v1',
+    apiUrl: '/api/v1',
 };
 
 /*
