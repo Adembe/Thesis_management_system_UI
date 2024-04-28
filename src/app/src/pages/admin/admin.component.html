@@ -90,10 +90,6 @@
                             Хөтөлбөр
                             <p-sortIcon field="type"></p-sortIcon>
                         </th>
-                        <th pSortableColumn="password">
-                            Нууц үг
-                            <p-sortIcon field="password"></p-sortIcon>
-                        </th>
                         <th pSortableColumn="phone">
                             Утас
                             <p-sortIcon field="phone"></p-sortIcon>
@@ -123,22 +119,18 @@
                         </td>
                         <td style="width: 25%; min-width: 10rem">
                             <span class="p-column-title">Description</span>
-                            <span *ngIf="user?.programm == 0"
+                            <span *ngIf="user?.programm == 0 && user?.type!=1 "
                                 >Программ хангамж</span
                             >
-                            <span *ngIf="user?.programm == 1"
+                            <span *ngIf="user?.programm == 1 && user?.type!=1"
                                 >Мэдээллийн технологи</span
                             >
-                            <span *ngIf="user?.programm == 2"
+                            <span *ngIf="user?.programm == 2 && user?.type!=1"
                                 >Мэдээллийн систем</span
                             >
-                            <span *ngIf="user?.programm == 3"
+                            <span *ngIf="user?.programm == 3 && user?.type!=1"
                                 >Компьютерийн ухаан</span
                             >
-                        </td>
-                        <td style="width: 25%; min-width: 8rem">
-                            <span class="p-column-title">password</span>
-                            {{ user?.password }}
                         </td>
                         <td style="width: 25%; min-width: 8rem">
                             <span class="p-column-title">Phone</span>
@@ -187,11 +179,6 @@
                             'ng-invalid ng-dirty': submitted && !user.fname
                         }"
                     />
-                    <small
-                        class="ng-dirty ng-invalid"
-                        *ngIf="submitted && !user.fname"
-                        >Хэрэглэгчийн овог хоосон байна.</small
-                    >
                 </div>
                 <div class="field">
                     <label for="lname">Нэр</label>
@@ -206,11 +193,6 @@
                             'ng-invalid ng-dirty': submitted && !user.lname
                         }"
                     />
-                    <small
-                        class="ng-dirty ng-invalid"
-                        *ngIf="submitted && !user.lname"
-                        >Хэрэглэгчийн нэр хоосон байна</small
-                    >
                 </div>
                 <div class="field">
                     <label for="email">Майл</label>
@@ -219,12 +201,10 @@
                         pInputTextarea
                         [(ngModel)]="user.email"
                         required
+                        [ngClass]="{
+                            'ng-invalid ng-dirty': submitted && !user.email
+                        }"
                     />
-                    <small
-                        class="ng-dirty ng-invalid"
-                        *ngIf="submitted && !user.email"
-                        >Агуулга хоосон байна.</small
-                    >
                 </div>
                 <div class="field">
                     <label for="requirement">Эрх</label>
@@ -234,12 +214,11 @@
                         optionLabel="name"
                         optionValue="type"
                         [showClear]="true"
+                        required
+                        [ngClass]="{
+                            'ng-invalid ng-dirty': submitted && !user.type
+                        }"
                     ></p-dropdown>
-                    <small
-                        class="ng-dirty ng-invalid"
-                        *ngIf="submitted && !user.type"
-                        >Төрөл хоосон байна.</small
-                    >
                 </div>
                 <div class="field">
                     <label for="programm">Хөтөлбөр</label>
@@ -249,12 +228,11 @@
                         optionLabel="name"
                         optionValue="code"
                         [showClear]="true"
+                        required
+                        [ngClass]="{
+                            'ng-invalid ng-dirty': submitted && !user.programm
+                        }"
                     ></p-dropdown>
-                    <small
-                        class="ng-dirty ng-invalid"
-                        *ngIf="submitted && !user.programm"
-                        >Төрөл хоосон байна.</small
-                    >
                 </div>
                 <div class="field">
                     <label for="password">Нууц үг</label>
@@ -264,28 +242,22 @@
                         [(ngModel)]="user.password"
                         required
                         minlength="6"
+                        [ngClass]="{
+                            'ng-invalid ng-dirty': submitted && !user.password
+                        }"
                     />
-                    <small
-                        class="ng-dirty ng-invalid"
-                        *ngIf="submitted && !user.password"
-                        >Нууц үг хоосон байна.</small
-                    >
                 </div>
                 <div class="field">
                     <label for="phone_number">Утас</label>
-                    <input
-                        id="phone_number"
-                        pInputText
+                    <p-inputMask
+                        mask="9999-9999"
                         [(ngModel)]="user.phone_number"
+                        placeholder="9999-9999"
                         required
-                        minlength="8"
-                        maxlength="8"
-                    />
-                    <small
-                        class="ng-dirty ng-invalid"
-                        *ngIf="submitted && !user.phone_number"
-                        >Нууц үг хоосон байна.</small
-                    >
+                        [ngClass]="{
+                            'ng-invalid ng-dirty': submitted && !user.phone_number
+                        }"
+                    ></p-inputMask>
                 </div>
             </ng-template>
 

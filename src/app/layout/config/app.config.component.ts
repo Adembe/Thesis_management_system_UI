@@ -14,7 +14,9 @@ export class AppConfigComponent {
     constructor(
         public layoutService: LayoutService,
         public menuService: MenuService
-    ) {}
+    ) {
+        
+    }
 
     get visible(): boolean {
         return this.layoutService.state.configSidebarVisible;

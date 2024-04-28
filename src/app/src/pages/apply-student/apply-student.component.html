@@ -139,46 +139,9 @@
                             <span class="p-column-title">Price</span>
                             {{ thesis?.requirement }}
                         </td>
-                        <!-- <td style="width: 25%; min-width: 8rem">
-                            <span class="p-column-title">Price</span>
-                            <ng-container
-                                *ngIf="thesis?.status == 2; else otherStatus"
-                            >
-                                <span>Баталгаажсан</span>
-                            </ng-container>
-                            <ng-template #otherStatus>
-                                <ng-container
-                                    *ngIf="
-                                        thesis?.status == 0;
-                                        else nonConfirmed
-                                    "
-                                >
-                                    <span>Цуцлагдсан</span>
-                                </ng-container>
-                            </ng-template>
-                            <ng-template #nonConfirmed>
-                                <span>Хүлээгдэж байна</span>
-                            </ng-template>
-                        </td> -->
-                        <!-- <td>
-                            <div class="flex">
-                                <button
-                                    pButton
-                                    pRipple
-                                    icon="pi pi-pencil"
-                                    class="p-button-rounded p-button-success mr-2"
-                                    (click)="editThesis(thesis)"
-                                ></button>
-                                <button
-                                    pButton
-                                    pRipple
-                                    icon="pi pi-trash"
-                                    class="p-button-rounded p-button-warning"
-                                    (click)="deleteThesis(thesis)"
-                                ></button>
-                            </div>
-                        </td> -->
-                        <td></td>
+                        <td class="text-center">
+                            {{thesis.applied_studets.length}}
+                        </td>
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="rowexpansion" let-thesis>

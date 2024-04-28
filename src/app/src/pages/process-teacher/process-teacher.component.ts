@@ -117,14 +117,6 @@ export class ProcessTeacherComponent {
             console.log('res', res);
             if (res.status == true) {
                 this.thesises = res.body;
-                console.log('thsis', this.thesises);
-                const res1 = await lastValueFrom(
-                    this.processService.getProcessDetail(this.thesises[0].id)
-                );
-                if (res1.status == true) {
-                    this.processDetail = res1.body;
-                    console.log('this.processDetail', this.processDetail);
-                }
             }
         } else {
             this.processTandService.getProcessAll().subscribe((data: any) => {
@@ -152,7 +144,28 @@ export class ProcessTeacherComponent {
         }
     }
 
-    openProcess(thesis) {
+    async openProcess(thesis) {
+        const response = await lastValueFrom(
+            this.processService.getProcessDetail(thesis.id)
+        );
+        if (response.status == true) {
+            this.processDetail = response.body;
+            this.messageService.add({
+                severity: 'success',
+                summary: '',
+                detail: response?.message,
+                life: 3000,
+            });
+            console.log('this.processDetail', this.processDetail);
+        } else {
+            this.messageService.add({
+                severity: 'warning',
+                summary: '',
+                detail: response?.message,
+                life: 3000,
+            });
+        }
+
         this.thesis = { ...thesis };
         this.showProcessTeacher = true;
     }

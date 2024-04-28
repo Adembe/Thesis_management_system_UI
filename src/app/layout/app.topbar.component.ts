@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 export class AppTopBarComponent {
     items!: MenuItem[];
     menuItems!: MenuItem[];
-
+    Profile:any
     @ViewChild('menubutton') menuButton!: ElementRef;
 
     @ViewChild('topbarmenubutton') topbarMenuButton!: ElementRef;
@@ -18,6 +18,7 @@ export class AppTopBarComponent {
     @ViewChild('topbarmenu') menu!: ElementRef;
 
     constructor(public layoutService: LayoutService, public router: Router) {
+        this.Profile = localStorage.getItem("user_name")
         this.menuItems = [
             {
                 label: 'Профайл',

@@ -86,6 +86,8 @@ export class AdminComponent {
 
     rowsPerPageOptions = [5, 10, 20];
 
+    isUpdate = false;
+
     constructor(
         private messageService: MessageService,
         private userService: UserService
@@ -123,6 +125,7 @@ export class AdminComponent {
 
     editThesis(user: User) {
         console.log('users:', user);
+        this.isUpdate = true;
         this.user = { ...user };
         this.usersDialog = true;
     }
@@ -160,10 +163,20 @@ export class AdminComponent {
         this.submitted = false;
     }
 
-    saveUser(isUpdate: boolean) {
-        console.log(isUpdate);
+    updateUser() {
         this.submitted = true;
-
+        if (
+            this.user.id == null ||
+            this.user.type == null ||
+            this.user.programm == null ||
+            this.user.fname == null ||
+            this.user.lname == null ||
+            this.user.email == null ||
+            this.user.password == null ||
+            this.user.phone_number == null
+        ) {
+            return;
+        }
         const body: User = {
             id: this.user.id,
             type: this.user.type,
@@ -175,18 +188,78 @@ export class AdminComponent {
             phone_number: this.user.phone_number,
         };
         this.userService.updateUser(body).subscribe((response) => {
-            this.messageService.add({
-                severity: 'success',
-                summary: 'Successful',
-                detail: response.message,
-                life: 3000,
-            });
             if (response.status === true) {
+                this.messageService.add({
+                    severity: 'success',
+                    summary: 'Successful',
+                    detail: response.message,
+                    life: 3000,
+                });
                 this.ngOnInit();
+            } else {
+                this.messageService.add({
+                    severity: 'warning',
+                    summary: '',
+                    detail: response.message,
+                    life: 3000,
+                });
             }
         });
         this.user = {};
         this.usersDialog = false;
+        this.isUpdate = false;
+    }
+
+    createUser() {
+        this.submitted = true;
+        if (
+            this.user.type == null ||
+            this.user.programm == null ||
+            this.user.fname == null ||
+            this.user.lname == null ||
+            this.user.email == null ||
+            this.user.password == null ||
+            this.user.phone_number == null
+        ) {
+            return;
+        }
+        const body: User = {
+            id: this.user.id,
+            type: this.user.type,
+            programm: this.user.programm,
+            fname: this.user.fname,
+            lname: this.user.lname,
+            email: this.user.email,
+            password: this.user.password,
+            phone_number: this.user.phone_number,
+        };
+        this.userService.createUser(body).subscribe((response) => {
+            if (response.status === true) {
+                this.messageService.add({
+                    severity: 'success',
+                    summary: 'Successful',
+                    detail: response.message,
+                    life: 3000,
+                });
+                this.ngOnInit();
+            } else {
+                this.messageService.add({
+                    severity: 'warning',
+                    summary: '',
+                    detail: response.message,
+                    life: 3000,
+                });
+            }
+        });
+        this.user = {};
+        this.usersDialog = false;
+    }
+    saveUser() {
+        if (this.isUpdate == true) {
+            this.updateUser();
+        } else {
+            this.createUser();
+        }
     }
 
     deleteUser(user) {

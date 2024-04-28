@@ -63,6 +63,7 @@ export class LoginComponent implements OnInit {
                 localStorage.setItem('token', res.body['Token']);
                 localStorage.setItem('user_id', res.body['UserId']);
                 localStorage.setItem('type', res.body['Type']);
+                localStorage.setItem('user_name', res.body['UserName']);
                 this.router.navigate(['/']);
             } else {
                 this.messageService.add({

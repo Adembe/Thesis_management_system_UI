@@ -1,5 +1,6 @@
 <div class="grid">
     <div class="col-12">
+        <p-toast></p-toast>
         <div class="card px-6 py-6">
             <p-table
                 #dt
@@ -280,7 +281,7 @@
         <p-dialog
             [(visible)]="showProcessTeacher"
             [style]="{ width: '600px', height: '800px' }"
-            header="Явц-1-ын үнэлгээг оруулна уу?"
+            header="Илгээсэн PDF файл"
             [modal]="true"
             class="p-fluid"
         >
@@ -331,14 +332,12 @@
                 <div class="flex flex-row-reverse my-2">
                     <div style="min-width: 30px">
                         <button
-                            ngClass="flex flex-row-reverse"
                             pButton
                             pRipple
-                            icon="pi pi-caret-right"
                             class="p-button-rounded mr-2 p-button-primery"
                             (click)="sentFeedback()"
                         >
-                            Submit
+                            Хадгалах
                         </button>
                     </div>
                 </div>

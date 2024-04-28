@@ -15,7 +15,7 @@ export class AppMenuComponent implements OnInit {
         let userType = localStorage.getItem('type');
 
         switch (userType.toString()) {
-            case '0':
+            case '0'://student
                 this.model = [
                     {
                         label: 'Цэс',
@@ -39,7 +39,7 @@ export class AppMenuComponent implements OnInit {
                     },
                 ];
                 break;
-            case '1':
+            case '1'://admin
                 this.model = [
                     {
                         label: 'Цэс',
@@ -50,17 +50,17 @@ export class AppMenuComponent implements OnInit {
                                 routerLink: ['/'],
                             },
                             {
-                                label: 'ThesisSugarlt',
+                                label: 'Багш нарын дэвшүүлсэн сэдвүүд',
                                 icon: 'pi pi-fw pi-id-card',
                                 routerLink: ['/pages/thesis-office'],
                             },
                             {
-                                label: 'Админ',
+                                label: 'Хэрэглэгч',
                                 icon: 'pi pi-fw pi-id-card',
                                 routerLink: ['/pages/admin'],
                             },
                             {
-                                label: 'ProcessTeacher',
+                                label: 'Явц',//ProcessTeacher
                                 icon: 'pi pi-fw pi-id-card',
                                 routerLink: ['/pages/process-teacher'],
                             },
@@ -68,7 +68,7 @@ export class AppMenuComponent implements OnInit {
                     },
                 ];
                 break;
-            case '2':
+            case '2': // teacher
                 this.model = [
                     {
                         label: 'Цэс',

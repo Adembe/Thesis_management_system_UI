@@ -146,6 +146,7 @@ export class ProcessComponent {
                     detail: response.message,
                     life: 3000,
                 });
+                this.ngOnInit();
             } else {
                 this.messageService.add({
                     severity: 'warning',
