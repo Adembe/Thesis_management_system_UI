@@ -85,10 +85,6 @@ export class ProcessTeacherComponent {
     statuses: any[] = [];
 
     rowsPerPageOptions = [5, 10, 20];
-    process1: any;
-    process2: any;
-    process3: any;
-    process4: any;
     constructor(
         private messageService: MessageService,
         private processTandService: ProcessTandSService
@@ -114,10 +110,10 @@ export class ProcessTeacherComponent {
 
     editProcess(thesis) {
         if (Number(localStorage.getItem('type')) == 2) {
-            this.thesis = thesis;
+            this.thesis = { ...thesis };
             this.showProcessDialog = true;
         } else {
-            this.thesis = thesis;
+            this.thesis = { ...thesis };
             this.showProcessAllDialog = true;
         }
     }
@@ -133,18 +129,16 @@ export class ProcessTeacherComponent {
         if (type == 1) {
             const body = {
                 id: this.thesis.id,
-                process1: Number(this.process1),
+                process1: this.thesis.process1,
             };
             console.log('body', body);
-            this.processTandService
-                .updateFeedback(body)
-                .subscribe((response) => {
-                    console.log('data: ', response);
-                    if (response.status === true) {
-                        this.ngOnInit();
-                        this.showProcessDialog = false;
-                    }
-                });
+            this.processTandService.updatePoint(body).subscribe((response) => {
+                console.log('data: ', response);
+                if (response.status === true) {
+                    this.ngOnInit();
+                    this.showProcessDialog = false;
+                }
+            });
         } else {
             const body = {
                 id: this.thesis.id,
@@ -155,7 +149,7 @@ export class ProcessTeacherComponent {
             };
             console.log('body', body);
             this.processTandService
-                .updateFeedback(body)
+                .updateAllPoint(body)
                 .subscribe((response) => {
                     console.log('data: ', response);
                     if (response.status === true) {

@@ -19,7 +19,10 @@ export class ProcessTandSService {
         return this.http.get<any>(this.apiUrl + '/teacher/' + id);
     }
 
-    updateFeedback(feedback: any): Observable<any> {
-        return this.http.put<any>(this.apiUrl, feedback);
+    updatePoint(point: any): Observable<any> {
+        return this.http.put<any>(this.apiUrl, point);
+    }
+    updateAllPoint(pointAll: any): Observable<any> {
+        return this.http.put<any>(this.apiUrl + '/all', pointAll);
     }
 }
