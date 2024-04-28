@@ -133,9 +133,10 @@ export class ApplyStudentComponent {
                     detail: response.message,
                     life: 3000,
                 });
+                this.ngOnInit();
             } else {
                 this.messageService.add({
-                    severity: 'warning',
+                    severity: 'warn',
                     summary: '',
                     detail: response.message,
                     life: 3000,

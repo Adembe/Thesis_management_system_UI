@@ -152,15 +152,15 @@ export class ProcessTeacherComponent {
             this.processDetail = response.body;
             this.messageService.add({
                 severity: 'success',
-                summary: '',
+                summary: 'Successfull',
                 detail: response?.message,
                 life: 3000,
             });
             console.log('this.processDetail', this.processDetail);
         } else {
             this.messageService.add({
-                severity: 'warning',
-                summary: '',
+                severity: 'warn',
+                summary: 'Warning',
                 detail: response?.message,
                 life: 3000,
             });
@@ -234,7 +234,7 @@ export class ProcessTeacherComponent {
                 });
             } else {
                 this.messageService.add({
-                    severity: 'warning',
+                    severity: 'warn',
                     summary: 'Successful',
                     detail: response.message,
                     life: 3000,

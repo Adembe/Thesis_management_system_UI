@@ -198,8 +198,8 @@ export class AdminComponent {
                 this.ngOnInit();
             } else {
                 this.messageService.add({
-                    severity: 'warning',
-                    summary: '',
+                    severity: 'warn',
+                    summary: 'Waning',
                     detail: response.message,
                     life: 3000,
                 });
@@ -244,8 +244,8 @@ export class AdminComponent {
                 this.ngOnInit();
             } else {
                 this.messageService.add({
-                    severity: 'warning',
-                    summary: '',
+                    severity: 'warn',
+                    summary: 'awd',
                     detail: response.message,
                     life: 3000,
                 });
