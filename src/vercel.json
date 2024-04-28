@@ -1,0 +1,9 @@
+{
+    "version": 2,
+    "rewrites": [
+        {
+            "source": "/api/v1/:path*",
+            "destination": "https://thesis-management-system-api.onrender.com/api/v1/:path*"
+        }
+    ]
+}
