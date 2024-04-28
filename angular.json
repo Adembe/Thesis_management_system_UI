@@ -66,13 +66,15 @@
                     },
                     "configurations": {
                         "production": {
-                            "buildTarget": "sakai-ng:build:production"
+                            "buildTarget": "sakai-ng:build:production",
+                            "proxyConfig": "src/proxy.conf.prod.json"
                         },
                         "development": {
-                            "buildTarget": "sakai-ng:build:development"
+                            "buildTarget": "sakai-ng:build:development",
+                            "proxyConfig": "src/proxy.conf.json"
                         }
                     },
-                    "defaultConfiguration": "development"
+                    "defaultConfiguration": "production"
                 },
                 "extract-i18n": {
                     "builder": "@angular-devkit/build-angular:extract-i18n",

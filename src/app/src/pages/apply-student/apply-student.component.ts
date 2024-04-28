@@ -137,7 +137,7 @@ export class ApplyStudentComponent {
             } else {
                 this.messageService.add({
                     severity: 'warn',
-                    summary: '',
+                    summary: 'Waning',
                     detail: response.message,
                     life: 3000,
                 });
