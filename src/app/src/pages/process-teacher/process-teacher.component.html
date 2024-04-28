@@ -1,0 +1,294 @@
+<div class="grid">
+    <div class="col-12">
+        <div class="card px-6 py-6">
+            <p-table
+                #dt
+                [value]="thesises"
+                [columns]="cols"
+                responsiveLayout="scroll"
+                [rows]="10"
+                [globalFilterFields]="[
+                    'administrator',
+                    'teacher_name',
+                    'subject_mgl',
+                    'subject_eng',
+                    'content',
+                    'requirement'
+                ]"
+                [paginator]="true"
+                [rowsPerPageOptions]="[10, 20, 30]"
+                [showCurrentPageReport]="true"
+                currentPageReportTemplate=" {first} - {last} нийт:{totalRecords} "
+                [(selection)]="selectedThesis"
+                selectionMode="multiple"
+                [rowHover]="true"
+                dataKey="id"
+            >
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th style="width: 20px" rowspan="2">№</th>
+                        <th pSortableColumn="administrator" rowspan="2">
+                            Удирдагч<p-sortIcon
+                                field="administrator"
+                            ></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="subject_name_mgl" rowspan="2">
+                            Сэдвийн нэр
+                            <p-sortIcon field="subject_name_mgl"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="subject_name_eng" rowspan="2">
+                            Оюутаны нэр
+                            <p-sortIcon field="subject_name_eng"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="content" rowspan="2">
+                            Хөтөлбөр
+                            <p-sortIcon field="content"></p-sortIcon>
+                        </th>
+                        <th
+                            pSortableColumn="content"
+                            colspan="4"
+                            style="text-align: center; vertical-align: middle"
+                        >
+                            Оноо
+                        </th>
+                        <th rowspan="2"></th>
+                    </tr>
+                    <tr>
+                        <th pSortableColumn="requirement">Явц-1</th>
+                        <th>Явц-2</th>
+                        <th>Урьдчилсан хамгаалалт</th>
+                        <th>Жинхэнэ хамгаалалт</th>
+                    </tr>
+                </ng-template>
+                <ng-template
+                    pTemplate="body"
+                    let-thesis
+                    let-rowIndex="rowIndex"
+                >
+                    <tr>
+                        <td>{{ rowIndex + 1 }}</td>
+                        <td style="width: 25%; min-width: 10rem">
+                            <span class="p-column-title" style="width: 30px"
+                                >Id</span
+                            >
+                            {{ thesis?.teacher_name }}
+                        </td>
+                        <td style="width: 25%; min-width: 10rem">
+                            <span class="p-column-title">Id1</span>
+                            {{ thesis?.thesis_name }}
+                        </td>
+                        <td style="width: 25%; min-width: 10rem">
+                            <span class="p-column-title">Id1</span>
+                            {{ thesis?.student_name }}
+                        </td>
+                        <td>
+                            <span *ngIf="thesis?.student_programm == '0'"
+                                >Программ хангамж</span
+                            >
+                            <span *ngIf="thesis?.student_programm == '1'"
+                                >Мэдээллийн технологи</span
+                            >
+                            <span *ngIf="thesis?.student_programm == '2'"
+                                >Мэдээллийн систем</span
+                            >
+                            <span *ngIf="thesis?.student_programm == '3'"
+                                >Компьютерийн ухаан</span
+                            >
+                        </td>
+                        <td
+                            style="
+                                width: 25%;
+                                min-width: 10rem;
+                                text-align: center;
+                                vertical-align: middle;
+                            "
+                        >
+                            <span class="p-column-title">Id1</span>
+                            {{ thesis?.process1 }}
+                        </td>
+                        <td
+                            style="
+                                width: 25%;
+                                min-width: 10rem;
+                                text-align: center;
+                                vertical-align: middle;
+                            "
+                        >
+                            <span class="p-column-title">Description</span>
+                            {{ thesis?.process2 }}
+                        </td>
+                        <td
+                            style="
+                                width: 25%;
+                                min-width: 8rem;
+                                text-align: center;
+                                vertical-align: middle;
+                            "
+                        >
+                            <span class="p-column-title">Price</span>
+                            {{ thesis?.process3 }}
+                        </td>
+                        <td
+                            style="
+                                width: 25%;
+                                min-width: 8rem;
+                                text-align: center;
+                                vertical-align: middle;
+                            "
+                        >
+                            <span class="p-column-title">Price</span>
+                            {{ thesis?.process4 }}
+                        </td>
+                        <td>
+                            <div class="flex">
+                                <button
+                                    pButton
+                                    pRipple
+                                    icon="pi pi-pencil"
+                                    class="p-button-rounded p-button-success mr-2"
+                                    (click)="editProcess(thesis)"
+                                ></button>
+                            </div>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+        <!-- <p-dialog
+            [(visible)]="showProcessDialog"
+            [style]="{ width: '450px' }"
+            header="Явцын үнэлгээ"
+            [modal]="true"
+            class="p-fluid"
+        >
+            <p-table
+                #dt
+                [value]="showThesis"
+                [columns]="cols"
+                responsiveLayout="scroll"
+                [rows]="10"
+                [globalFilterFields]="[
+                    'administrator',
+                    'subject_mgl',
+                    'response'
+                ]"
+                [paginator]="true"
+                [rowsPerPageOptions]="[10, 20, 30]"
+                [showCurrentPageReport]="true"
+                currentPageReportTemplate=" {first} - {last} нийт:{totalRecords} "
+                [(selection)]="selectedThesis"
+                selectionMode="multiple"
+                [rowHover]="true"
+                dataKey="id"
+            >
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th style="width: 20px">№</th>
+                        <th pSortableColumn="administrator">
+                            Удирдагч<p-sortIcon
+                                field="administrator"
+                            ></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="subject_name_mgl">
+                            Сэдвийн нэр
+                            <p-sortIcon field="subject_name_mgl"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="response">
+                            Оюутаны нэр
+                            <p-sortIcon field="response"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="response">
+                            Хөтөлбөр
+                            <p-sortIcon field="response"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="administrator">
+                            Явц-1<p-sortIcon field="administrator"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="subject_name_mgl">
+                            Явц-2
+                            <p-sortIcon field="subject_name_mgl"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="response">
+                            Урьдчилсан хамгаалалт
+                            <p-sortIcon field="response"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="response">
+                            Жинхэнэ хамгаалалт
+                            <p-sortIcon field="response"></p-sortIcon>
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template
+                    pTemplate="body"
+                    let-thesis
+                    let-rowIndex="rowIndex"
+                >
+                    <tr>
+                        <td style="width: 10%">{{ rowIndex + 1 }}</td>
+                        <td style="width: 30%">
+                            <span class="p-column-title" style="width: 30px"
+                                >Id</span
+                            >
+                            {{ thesis?.lname }}
+                        </td>
+                        <td style="width: 30%">
+                            <span class="p-column-title">Id1</span>
+                            {{ thesis?.mgl_name }}
+                        </td>
+                        <td style="width: 30%">
+                            <span class="p-column-title">Price</span>
+                            <span *ngIf="thesis?.status == '3'"
+                                >Баталгаажсан</span
+                            >
+                            <span *ngIf="thesis?.status == '0'"
+                                >Цуцлагдсан</span
+                            >
+                            <span *ngIf="thesis?.status == '2'"
+                                >Хүлээгдэж байгаа</span
+                            >
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </p-dialog> -->
+        <p-dialog
+            [(visible)]="showProcessDialog"
+            [style]="{ width: '450px' }"
+            header="Явц-1-ын үнэлгээг оруулна уу?"
+            [modal]="true"
+            class="p-fluid"
+        >
+            <ng-template pTemplate="content">
+                <div class="field">
+                    <input
+                        type="text"
+                        pInputText
+                        id="process1"
+                        [(ngModel)]="process1"
+                        required
+                        autofocus
+                    />
+                </div>
+            </ng-template>
+
+            <ng-template pTemplate="footer">
+                <button
+                    pButton
+                    pRipple
+                    label="Цуцлах"
+                    icon="pi pi-times"
+                    class="p-button-text"
+                    (click)="hideDialog()"
+                ></button>
+                <button
+                    pButton
+                    pRipple
+                    label="Хадгалах"
+                    icon="pi pi-check"
+                    class="p-button-text"
+                    (click)="saveProcessOne()"
+                ></button>
+            </ng-template>
+        </p-dialog>
+    </div>
+</div>

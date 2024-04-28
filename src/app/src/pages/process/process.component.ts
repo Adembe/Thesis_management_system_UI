@@ -141,6 +141,38 @@ export class ProcessComponent {
         this.showProcessDialog = true;
     }
 
+    sentFeedback() {
+        const body = {
+            id: this.selectedDetail.id,
+            feedback: this.text,
+        };
+        console.log(body);
+        this.processService.updateFeedback(body).subscribe((response) => {
+            if (response.status === true) {
+                console.log('responsebody:', response.body);
+
+                const item = this.processDetail.find(
+                    (item) => item.id === this.selectedDetail.id
+                );
+                item.feedback = this.text;
+
+                this.messageService.add({
+                    severity: 'success',
+                    summary: 'Successful',
+                    detail: response.message,
+                    life: 3000,
+                });
+            } else {
+                this.messageService.add({
+                    severity: 'warning',
+                    summary: 'Successful',
+                    detail: response.message,
+                    life: 3000,
+                });
+            }
+        });
+    }
+
     onBasicUploadAuto(event) {
         console.log('event: ', event);
         const file: File = event.files[0];
@@ -175,7 +207,8 @@ export class ProcessComponent {
 
     onRowSelect(event) {
         console.log('event-', event);
-        this.text = event.data.feedback;
+        console.log('selectedDetail-', this.selectedDetail);
+        this.text = this.selectedDetail.feedback;
     }
     // This function converts a byte array to a Blob
     convertByteArrayToBlob(byteArray: Uint8Array, contentType: string): Blob {

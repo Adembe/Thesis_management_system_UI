@@ -13,7 +13,7 @@ export class ProcessService {
     }
 
     insertComfirmRequest(thesis: any): Observable<any> {
-        return this.http.put<any>(this.apiUrl, thesis);
+        return this.http.post<any>(this.apiUrl, thesis);
     }
 
     insertProcessDetail(thesis: any): Observable<any> {
@@ -43,5 +43,9 @@ export class ProcessService {
                 return throwError(error);
             })
         );
+    }
+
+    updateFeedback(feedback: any): Observable<any> {
+        return this.http.put<any>(this.apiUrl, feedback);
     }
 }
