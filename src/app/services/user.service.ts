@@ -6,11 +6,9 @@ import { environment } from 'src/environments/environment';
 @Injectable({
     providedIn: 'root', // This makes the service application-wide available
 })
-
-//aaa
 export class UserService {
     // Change the apiUrl to a relative path that matches your proxy configuration
-    private apiUrl = environment.apiUrl + '/users/';
+    private apiUrl = environment.apiUrl + '/users';
 
     constructor(private http: HttpClient) {
         console.log('apiUrl: ', this.apiUrl);
@@ -20,7 +18,7 @@ export class UserService {
         const headers = new HttpHeaders({
             Accept: 'application/json', // Ensuring JSON is expected
         });
-        return this.http.get<any[]>(this.apiUrl, { headers: headers });
+        return this.http.get<any[]>(this.apiUrl + '/', { headers: headers });
     }
 
     getUser(id: string): Observable<any> {
