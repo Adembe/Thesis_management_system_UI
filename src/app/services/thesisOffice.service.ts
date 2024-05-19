@@ -14,7 +14,7 @@ export class ThesisOfficeService {
     updateThesis(thesis: any): Observable<any> {
         return this.http.put<any>(this.apiUrl, thesis);
     }
-    getThesis(): Observable<any[]> {
-        return this.http.get<any[]>(this.apiUrl);
+    getThesis(seasonCode: any = null): Observable<any[]> {
+        return this.http.get<any[]>(this.apiUrl + '/' + seasonCode);
     }
 }

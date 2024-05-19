@@ -8,7 +8,7 @@
                         <button
                             pButton
                             pRipple
-                            label="Шинэ хэрэглэгч үүсгэх"
+                            label="Хэрэглэгчийн мэдээллийг засах"
                             icon="pi pi-plus"
                             class="p-button-success mr-2"
                             (click)="openNew()"
@@ -34,11 +34,12 @@
                 responsiveLayout="scroll"
                 [rows]="10"
                 [globalFilterFields]="[
-                    'teacher_name',
-                    'subject_mgl',
-                    'subject_eng',
-                    'content',
-                    'requirement'
+                    'fname',
+                    'lname',
+                    'user_mail',
+                    'type',
+                    'programm',
+                    'phone_number'
                 ]"
                 [paginator]="true"
                 [rowsPerPageOptions]="[10, 20, 30]"
@@ -59,7 +60,12 @@
                             <input
                                 pInputText
                                 type="text"
-                                (input)="onGlobalFilter(dt, $event)"
+                                (input)="
+                                    dt.filterGlobal(
+                                        $event.target.value,
+                                        'contains'
+                                    )
+                                "
                                 placeholder="Хайх..."
                                 class="w-full sm:w-auto"
                             />
@@ -86,9 +92,9 @@
                             Төрөл
                             <p-sortIcon field="type"></p-sortIcon>
                         </th>
-                        <th pSortableColumn="type">
+                        <th pSortableColumn="programm">
                             Хөтөлбөр
-                            <p-sortIcon field="type"></p-sortIcon>
+                            <p-sortIcon field="programm"></p-sortIcon>
                         </th>
                         <th pSortableColumn="phone">
                             Утас
@@ -119,16 +125,16 @@
                         </td>
                         <td style="width: 25%; min-width: 10rem">
                             <span class="p-column-title">Description</span>
-                            <span *ngIf="user?.programm == 0 && user?.type!=1 "
+                            <span *ngIf="user?.programm == 0 && user?.type != 1"
                                 >Программ хангамж</span
                             >
-                            <span *ngIf="user?.programm == 1 && user?.type!=1"
+                            <span *ngIf="user?.programm == 1 && user?.type != 1"
                                 >Мэдээллийн технологи</span
                             >
-                            <span *ngIf="user?.programm == 2 && user?.type!=1"
+                            <span *ngIf="user?.programm == 2 && user?.type != 1"
                                 >Мэдээллийн систем</span
                             >
-                            <span *ngIf="user?.programm == 3 && user?.type!=1"
+                            <span *ngIf="user?.programm == 3 && user?.type != 1"
                                 >Компьютерийн ухаан</span
                             >
                         </td>
@@ -161,7 +167,7 @@
         <p-dialog
             [(visible)]="usersDialog"
             [style]="{ width: '450px' }"
-            header="Дипломын сэдэв дэвшүүлэх"
+            header="Хэрэглэгч"
             [modal]="true"
             class="p-fluid"
         >
@@ -255,7 +261,8 @@
                         placeholder="9999-9999"
                         required
                         [ngClass]="{
-                            'ng-invalid ng-dirty': submitted && !user.phone_number
+                            'ng-invalid ng-dirty':
+                                submitted && !user.phone_number
                         }"
                     ></p-inputMask>
                 </div>

@@ -6,6 +6,7 @@ export interface Thesis {
     mgl_name?: string;
     content?: string;
     requirement?: string;
+    exfired?: string;
     createdAt?: Date; // Assuming you want to work with Date objects in TypeScript
     updatedAt?: Date; // Same assumption as above
 }

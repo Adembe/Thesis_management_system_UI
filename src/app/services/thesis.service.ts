@@ -20,8 +20,10 @@ export class ThesisService {
         return this.http.put<any>(this.apiUrl, thesis);
     }
     //Zowhon ooriin dewshvvlsen sedwiig awchirna
-    getOwnThesis(teacher_id: any): Observable<any[]> {
-        return this.http.get<any[]>(this.apiUrl + '/own/' + teacher_id);
+    getOwnThesis(teacher_id: any, seasonCode: any = null): Observable<any[]> {
+        return this.http.get<any[]>(
+            this.apiUrl + '/own/' + teacher_id + '/seasonCode/' + seasonCode
+        );
     }
     //Dewshvvlsen diplomin sedwiig ustgana
     deleteThesis(id: any): Observable<any> {

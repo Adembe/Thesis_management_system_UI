@@ -53,13 +53,12 @@ import { ProgressBarModule } from 'primeng/progressbar';
         ToastModule,
         ToolbarModule,
         RatingModule,
-        InputTextModule,
         InputTextareaModule,
         DropdownModule,
         RadioButtonModule,
         InputNumberModule,
         DialogModule,
-        ProgressBarModule
+        ProgressBarModule,
     ],
     providers: [MessageService],
     templateUrl: './thesis.component.html',
@@ -80,21 +79,35 @@ export class ThesisComponent {
     product: Product = {};
 
     selectedThesis: Product[] = [];
-
+    exfired: any[] = [];
     submitted: boolean = false;
 
     cols: any[] = [];
 
     statuses: any[] = [];
-
+    cities: any[] | undefined;
     rowsPerPageOptions = [5, 10, 20];
     isUpdate = false;
 
     constructor(
         private messageService: MessageService,
         private thesisService: ThesisService
-    ) {}
+    ) {
+        this.exfired = [
+            { name: '2023-2024 Намар', code: '0' },
+            { name: '2023-2024 Хавар', code: '1' },
+        ];
+    }
 
+    onSeasonChange(event) {
+        console.log('event', event);
+        this.thesisService
+            .getOwnThesis(localStorage.getItem('user_id'), event.value.code)
+            .subscribe((data: any) => {
+                console.log('data: ', data);
+                this.thesises = data.body;
+            });
+    }
     ngOnInit(): void {
         this.thesisService
             .getOwnThesis(localStorage.getItem('user_id'))
@@ -156,12 +169,17 @@ export class ThesisComponent {
 
     saveThesis() {
         this.submitted = true;
-        if(!this.thesis.mgl_name || !this.thesis.eng_name || !this.thesis.content || !this.thesis.requirement){
+        if (
+            !this.thesis.mgl_name ||
+            !this.thesis.eng_name ||
+            !this.thesis.content ||
+            !this.thesis.requirement ||
+            !this.thesis.exfired
+        ) {
             return;
         }
         console.log(this.isUpdate);
         if (this.isUpdate === true) {
-
             const body = {
                 id: this.thesis.id,
                 status: this.thesis.status,
@@ -187,7 +205,6 @@ export class ThesisComponent {
             this.thesis = {};
             this.thesisDialog = false;
         } else {
-
             const body = {
                 status: 1,
                 teacher_id: Number(localStorage.getItem('user_id')),
@@ -195,6 +212,7 @@ export class ThesisComponent {
                 eng_name: this.thesis.eng_name,
                 content: this.thesis.content,
                 requirement: this.thesis.requirement,
+                exfired: this.thesis.exfired,
             };
             console.log('body', body);
             this.thesisService.createThesis(body).subscribe((response) => {
@@ -260,5 +278,11 @@ export class ThesisComponent {
         console.log('this.selectedThesis: ', this.selectedThesis);
         this.thesis = {};
         this.thesisDialog = false;
+    }
+    onGlobalFilter(table: Table, event: Event) {
+        table.filterGlobal(
+            (event.target as HTMLInputElement).value,
+            'contains'
+        );
     }
 }

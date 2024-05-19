@@ -2,6 +2,16 @@
     <div class="col-12">
         <div class="card">
             <p-toast></p-toast>
+            <div class="flex">
+                <p-dropdown
+                    [options]="exfired"
+                    [(ngModel)]="thesis.exfired"
+                    optionLabel="name"
+                    [showClear]="true"
+                    placeholder="Улирал сонгох"
+                    (onChange)="onSeasonChange($event)"
+                />
+            </div>
             <p-table
                 #dt
                 [value]="thesises"
@@ -104,9 +114,23 @@
                         </td>
                         <td style="width: 25%; min-width: 8rem">
                             <span class="p-column-title">Price</span>
-                            <span *ngIf="thesis?.status == 0" class="customer-badge status-unqualified">Цуцлагдсан</span>
-                            <span *ngIf="thesis?.status == 2" class="customer-badge status-qualified">Баталгаажсан</span>
-                            <span *ngIf="thesis?.status != 2 && thesis?.status != 0" class="customer-badge status-new">Хүлээгдэж байна</span>
+                            <span
+                                *ngIf="thesis?.status == 0"
+                                class="customer-badge status-unqualified"
+                                >Цуцлагдсан</span
+                            >
+                            <span
+                                *ngIf="thesis?.status == 2"
+                                class="customer-badge status-qualified"
+                                >Баталгаажсан</span
+                            >
+                            <span
+                                *ngIf="
+                                    thesis?.status != 2 && thesis?.status != 0
+                                "
+                                class="customer-badge status-new"
+                                >Хүлээгдэж байна</span
+                            >
                             <!-- <ng-container
                                 *ngIf="thesis?.status == 2; else otherStatus"
                             >

@@ -10,6 +10,7 @@ export interface AllThesis {
     lname?: string;
     email?: string;
     phone_number?: string;
+    exfired?: string;
     createdAt?: Date; // Assuming you want to work with Date objects in TypeScript
     updatedAt?: Date; // Same assumption as above
 }

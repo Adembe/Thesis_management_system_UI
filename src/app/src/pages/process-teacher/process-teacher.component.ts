@@ -14,7 +14,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { Product } from 'src/app/demo/api/product';
 import { MessageService } from 'primeng/api';
 
-import { TableModule } from 'primeng/table';
+import { Table, TableModule } from 'primeng/table';
 import { FileUploadModule } from 'primeng/fileupload';
 import { ButtonModule } from 'primeng/button';
 import { RippleModule } from 'primeng/ripple';
@@ -277,5 +277,11 @@ export class ProcessTeacherComponent {
         );
 
         console.log('this.pdfUrl', this.pdfUrl);
+    }
+    onGlobalFilter(table: Table, event: Event) {
+        table.filterGlobal(
+            (event.target as HTMLInputElement).value,
+            'contains'
+        );
     }
 }

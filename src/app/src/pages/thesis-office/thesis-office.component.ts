@@ -77,7 +77,7 @@ export class ThesisOfficeComponent {
     selectedThesis: Product[] = [];
 
     submitted: boolean = false;
-
+    exfired: any[] = [];
     cols: any[] = [];
 
     statuses: any[] = [];
@@ -87,7 +87,12 @@ export class ThesisOfficeComponent {
     constructor(
         private messageService: MessageService,
         private thesisOffiveService: ThesisOfficeService
-    ) {}
+    ) {
+        this.exfired = [
+            { name: '2023-2024 Намар', code: '0' },
+            { name: '2023-2024 Хавар', code: '1' },
+        ];
+    }
 
     ngOnInit(): void {
         this.thesisOffiveService.getThesis().subscribe((data: any) => {
@@ -152,5 +157,21 @@ export class ThesisOfficeComponent {
         });
         this.thesis = {};
         this.thesisDialog = false;
+    }
+    onGlobalFilter(table: Table, event: Event) {
+        table.filterGlobal(
+            (event.target as HTMLInputElement).value,
+            'contains'
+        );
+    }
+    onSeasonChange(event) {
+        console.log('event', event);
+        this.thesisOffiveService
+            .getThesis(event.value.code)
+            .subscribe((data: any) => {
+                console.log('data: ', data);
+                this.thesises = data.body;
+                console.log(this.thesises);
+            });
     }
 }

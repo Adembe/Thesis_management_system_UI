@@ -11,10 +11,13 @@
                 [globalFilterFields]="[
                     'administrator',
                     'teacher_name',
-                    'subject_mgl',
-                    'subject_eng',
-                    'content',
-                    'requirement'
+                    'thesis_name',
+                    'student_name',
+                    'student_programm',
+                    'process1',
+                    'process2',
+                    'process3',
+                    'process4'
                 ]"
                 [paginator]="true"
                 [rowsPerPageOptions]="[10, 20, 30]"
@@ -25,6 +28,20 @@
                 [rowHover]="true"
                 dataKey="id"
             >
+                <ng-template pTemplate="caption">
+                    <div class="flex flex-row-reverse">
+                        <span class="block mt-2 md:mt-0 p-input-icon-left">
+                            <i class="pi pi-search"></i>
+                            <input
+                                pInputText
+                                type="text"
+                                (input)="onGlobalFilter(dt, $event)"
+                                placeholder="Хайх..."
+                                class="w-full sm:w-auto"
+                            />
+                        </span>
+                    </div>
+                </ng-template>
                 <ng-template pTemplate="header">
                     <tr>
                         <th style="width: 20px" rowspan="2">№</th>
