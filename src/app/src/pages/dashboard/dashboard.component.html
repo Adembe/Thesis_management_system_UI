@@ -3,10 +3,15 @@
         <div class="card mb-0">
             <div class="flex justify-content-between mb-3">
                 <div>
-                    <span class="block text-500 font-medium mb-3">Нийт дэвшүүлсэн сэдэв</span>
-                    <div class="text-900 font-medium text-xl">{{totalThesis}}</div>
+                    <span class="block text-500 font-medium mb-3"
+                        >Нийт дэвшүүлсэн сэдэв</span
+                    >
+                    <div class="text-900 font-medium text-xl">20</div>
                 </div>
-                <div class="flex align-items-center justify-content-center bg-blue-100 border-round" [ngStyle]="{width: '2.5rem', height: '2.5rem'}">
+                <div
+                    class="flex align-items-center justify-content-center bg-blue-100 border-round"
+                    [ngStyle]="{ width: '2.5rem', height: '2.5rem' }"
+                >
                     <i class="pi pi-book text-blue-500 text-xl"></i>
                 </div>
             </div>
@@ -16,10 +21,15 @@
         <div class="card mb-0">
             <div class="flex justify-content-between mb-3">
                 <div>
-                    <span class="block text-500 font-medium mb-3">Баталгаажсан сэдэв</span>
-                    <div class="text-900 font-medium text-xl">{{totalConfirmedThesis}}</div>
+                    <span class="block text-500 font-medium mb-3"
+                        >Баталгаажсан сэдэв</span
+                    >
+                    <div class="text-900 font-medium text-xl">6</div>
                 </div>
-                <div class="flex align-items-center justify-content-center bg-orange-100 border-round" [ngStyle]="{width: '2.5rem', height: '2.5rem'}">
+                <div
+                    class="flex align-items-center justify-content-center bg-orange-100 border-round"
+                    [ngStyle]="{ width: '2.5rem', height: '2.5rem' }"
+                >
                     <i class="pi pi-check-square text-orange-500 text-xl"></i>
                 </div>
             </div>
@@ -29,10 +39,15 @@
         <div class="card mb-0">
             <div class="flex justify-content-between mb-3">
                 <div>
-                    <span class="block text-500 font-medium mb-3">Сонгогдсон сэдэв</span>
-                    <div class="text-900 font-medium text-xl">{{totalSelectedThesis}}</div>
+                    <span class="block text-500 font-medium mb-3"
+                        >Сонгогдсон сэдэв</span
+                    >
+                    <div class="text-900 font-medium text-xl">4</div>
                 </div>
-                <div class="flex align-items-center justify-content-center bg-cyan-100 border-round" [ngStyle]="{width: '2.5rem', height: '2.5rem'}">
+                <div
+                    class="flex align-items-center justify-content-center bg-cyan-100 border-round"
+                    [ngStyle]="{ width: '2.5rem', height: '2.5rem' }"
+                >
                     <i class="pi pi-verified text-cyan-500 text-xl"></i>
                 </div>
             </div>
@@ -42,10 +57,15 @@
         <div class="card mb-0">
             <div class="flex justify-content-between mb-3">
                 <div>
-                    <span class="block text-500 font-medium mb-3">Энэ жил дэвшүүлсэн сэдэв</span>
-                    <div class="text-900 font-medium text-xl">{{totalThesisCurrenYear}}</div>
+                    <span class="block text-500 font-medium mb-3"
+                        >Энэ жил дэвшүүлсэн сэдэв</span
+                    >
+                    <div class="text-900 font-medium text-xl">12</div>
                 </div>
-                <div class="flex align-items-center justify-content-center bg-purple-100 border-round" [ngStyle]="{width: '2.5rem', height: '2.5rem'}">
+                <div
+                    class="flex align-items-center justify-content-center bg-purple-100 border-round"
+                    [ngStyle]="{ width: '2.5rem', height: '2.5rem' }"
+                >
                     <i class="pi pi-bookmark text-purple-500 text-xl"></i>
                 </div>
             </div>
@@ -57,79 +77,162 @@
             <div class="flex justify-content-between align-items-center mb-5">
                 <h5>Хамгийн эрэлттэй сэдэв</h5>
                 <div>
-                    <button pButton type="button" icon="pi pi-ellipsis-v" class="p-button-rounded p-button-text p-button-plain" (click)="menu.toggle($event)"></button>
+                    <button
+                        pButton
+                        type="button"
+                        icon="pi pi-ellipsis-v"
+                        class="p-button-rounded p-button-text p-button-plain"
+                        (click)="menu.toggle($event)"
+                    ></button>
                     <p-menu #menu [popup]="true" [model]="items"></p-menu>
                 </div>
             </div>
             <ul class="list-none p-0 m-0">
-                <li class="flex flex-column md:flex-row md:align-items-center md:justify-content-between mb-4">
+                <li
+                    class="flex flex-column md:flex-row md:align-items-center md:justify-content-between mb-4"
+                >
                     <div>
-                        <span class="text-900 font-medium mr-2 mb-1 md:mb-0">Space T-Shirt</span>
-                        <div class="mt-1 text-600">Clothing</div>
+                        <span class="text-900 font-medium mr-2 mb-1 md:mb-0"
+                            >Математик программчлалын заорим алгоритм,
+                            программууд
+                        </span>
+                        <div class="mt-1 text-600">Д. Гармаа</div>
                     </div>
                     <div class="mt-2 md:mt-0 flex align-items-center">
-                        <div class="surface-300 border-round overflow-hidden w-10rem lg:w-6rem" [ngStyle]="{height: '8px'}">
-                            <div class="bg-orange-500 h-full" [ngStyle]="{width: '50%'}"></div>
+                        <div
+                            class="surface-300 border-round overflow-hidden w-10rem lg:w-6rem"
+                            [ngStyle]="{ height: '8px' }"
+                        >
+                            <div
+                                class="bg-orange-500 h-full"
+                                [ngStyle]="{ width: '50%' }"
+                            ></div>
                         </div>
-                        <span class="text-orange-500 ml-3 font-medium">%50</span>
+                        <span class="text-orange-500 ml-3 font-medium"
+                            >%50</span
+                        >
                     </div>
                 </li>
-                <li class="flex flex-column md:flex-row md:align-items-center md:justify-content-between mb-4">
+                <li
+                    class="flex flex-column md:flex-row md:align-items-center md:justify-content-between mb-4"
+                >
                     <div>
-                        <span class="text-900 font-medium mr-2 mb-1 md:mb-0">Portal Sticker</span>
-                        <div class="mt-1 text-600">Accessories</div>
+                        <span class="text-900 font-medium mr-2 mb-1 md:mb-0"
+                            >Объектын хөдөлгөөнийг log-polar болон phase
+                            correlation аргыг ашиглан тооцоолох
+                        </span>
+                        <div class="mt-1 text-600">Т.Цэрэннадмид</div>
                     </div>
-                    <div class="mt-2 md:mt-0 ml-0 md:ml-8 flex align-items-center">
-                        <div class="surface-300 border-round overflow-hidden w-10rem lg:w-6rem" [ngStyle]="{height: '8px'}">
-                            <div class="bg-cyan-500 h-full" [ngStyle]="{width: '16%'}"></div>
+                    <div
+                        class="mt-2 md:mt-0 ml-0 md:ml-8 flex align-items-center"
+                    >
+                        <div
+                            class="surface-300 border-round overflow-hidden w-10rem lg:w-6rem"
+                            [ngStyle]="{ height: '8px' }"
+                        >
+                            <div
+                                class="bg-cyan-500 h-full"
+                                [ngStyle]="{ width: '16%' }"
+                            ></div>
                         </div>
                         <span class="text-cyan-500 ml-3 font-medium">%16</span>
                     </div>
                 </li>
-                <li class="flex flex-column md:flex-row md:align-items-center md:justify-content-between mb-4">
+                <li
+                    class="flex flex-column md:flex-row md:align-items-center md:justify-content-between mb-4"
+                >
                     <div>
-                        <span class="text-900 font-medium mr-2 mb-1 md:mb-0">Supernova Sticker</span>
-                        <div class="mt-1 text-600">Accessories</div>
+                        <span class="text-900 font-medium mr-2 mb-1 md:mb-0"
+                            >Ухаалаг төхөөрөмжид суурилсан цахим номын систем
+                        </span>
+                        <div class="mt-1 text-600">Н.Мөнхцэцэг</div>
                     </div>
-                    <div class="mt-2 md:mt-0 ml-0 md:ml-8 flex align-items-center">
-                        <div class="surface-300 border-round overflow-hidden w-10rem lg:w-6rem" [ngStyle]="{height: '8px'}">
-                            <div class="bg-pink-500 h-full" [ngStyle]="{width: '67%'}"></div>
+                    <div
+                        class="mt-2 md:mt-0 ml-0 md:ml-8 flex align-items-center"
+                    >
+                        <div
+                            class="surface-300 border-round overflow-hidden w-10rem lg:w-6rem"
+                            [ngStyle]="{ height: '8px' }"
+                        >
+                            <div
+                                class="bg-pink-500 h-full"
+                                [ngStyle]="{ width: '67%' }"
+                            ></div>
                         </div>
                         <span class="text-pink-500 ml-3 font-medium">%67</span>
                     </div>
                 </li>
-                <li class="flex flex-column md:flex-row md:align-items-center md:justify-content-between mb-4">
+                <li
+                    class="flex flex-column md:flex-row md:align-items-center md:justify-content-between mb-4"
+                >
                     <div>
-                        <span class="text-900 font-medium mr-2 mb-1 md:mb-0">Wonders Notebook</span>
-                        <div class="mt-1 text-600">Office</div>
+                        <span class="text-900 font-medium mr-2 mb-1 md:mb-0"
+                            >Буудлагын тэмцээн зохион байгуулах вэб аппликэйшн
+                        </span>
+                        <div class="mt-1 text-600">З.Цолмон</div>
                     </div>
-                    <div class="mt-2 md:mt-0 ml-0 md:ml-8 flex align-items-center">
-                        <div class="surface-300 border-round overflow-hidden w-10rem lg:w-6rem" [ngStyle]="{height: '8px'}">
-                            <div class="bg-green-500 h-full" [ngStyle]="{width: '35%'}"></div>
+                    <div
+                        class="mt-2 md:mt-0 ml-0 md:ml-8 flex align-items-center"
+                    >
+                        <div
+                            class="surface-300 border-round overflow-hidden w-10rem lg:w-6rem"
+                            [ngStyle]="{ height: '8px' }"
+                        >
+                            <div
+                                class="bg-green-500 h-full"
+                                [ngStyle]="{ width: '35%' }"
+                            ></div>
                         </div>
                         <span class="text-green-500 ml-3 font-medium">%35</span>
                     </div>
                 </li>
-                <li class="flex flex-column md:flex-row md:align-items-center md:justify-content-between mb-4">
+                <li
+                    class="flex flex-column md:flex-row md:align-items-center md:justify-content-between mb-4"
+                >
                     <div>
-                        <span class="text-900 font-medium mr-2 mb-1 md:mb-0">Mat Black Case</span>
-                        <div class="mt-1 text-600">Accessories</div>
+                        <span class="text-900 font-medium mr-2 mb-1 md:mb-0"
+                            >МУИС-ийн эмнэлэг – Үзлэгийн бүртгэлийн
+                            автоматжуулалт
+                        </span>
+                        <div class="mt-1 text-600">Б.Батням</div>
                     </div>
-                    <div class="mt-2 md:mt-0 ml-0 md:ml-8 flex align-items-center">
-                        <div class="surface-300 border-round overflow-hidden w-10rem lg:w-6rem" [ngStyle]="{height: '8px'}">
-                            <div class="bg-purple-500 h-full" [ngStyle]="{width: '75%'}"></div>
+                    <div
+                        class="mt-2 md:mt-0 ml-0 md:ml-8 flex align-items-center"
+                    >
+                        <div
+                            class="surface-300 border-round overflow-hidden w-10rem lg:w-6rem"
+                            [ngStyle]="{ height: '8px' }"
+                        >
+                            <div
+                                class="bg-purple-500 h-full"
+                                [ngStyle]="{ width: '75%' }"
+                            ></div>
                         </div>
-                        <span class="text-purple-500 ml-3 font-medium">%75</span>
+                        <span class="text-purple-500 ml-3 font-medium"
+                            >%75</span
+                        >
                     </div>
                 </li>
-                <li class="flex flex-column md:flex-row md:align-items-center md:justify-content-between mb-4">
+                <li
+                    class="flex flex-column md:flex-row md:align-items-center md:justify-content-between mb-4"
+                >
                     <div>
-                        <span class="text-900 font-medium mr-2 mb-1 md:mb-0">Robots T-Shirt</span>
-                        <div class="mt-1 text-600">Clothing</div>
+                        <span class="text-900 font-medium mr-2 mb-1 md:mb-0"
+                            >онлайн худалдаа, үйчилгээний систем
+                        </span>
+                        <div class="mt-1 text-600">Г.Ууганбаяр</div>
                     </div>
-                    <div class="mt-2 md:mt-0 ml-0 md:ml-8 flex align-items-center">
-                        <div class="surface-300 border-round overflow-hidden w-10rem lg:w-6rem" [ngStyle]="{height: '8px'}">
-                            <div class="bg-teal-500 h-full" [ngStyle]="{width: '40%'}"></div>
+                    <div
+                        class="mt-2 md:mt-0 ml-0 md:ml-8 flex align-items-center"
+                    >
+                        <div
+                            class="surface-300 border-round overflow-hidden w-10rem lg:w-6rem"
+                            [ngStyle]="{ height: '8px' }"
+                        >
+                            <div
+                                class="bg-teal-500 h-full"
+                                [ngStyle]="{ width: '40%' }"
+                            ></div>
                         </div>
                         <span class="text-teal-500 ml-3 font-medium">%40</span>
                     </div>
@@ -141,8 +244,11 @@
     <div class="col-12 xl:col-6">
         <div class="card">
             <h5>Процесс</h5>
-            <p-chart type="line" [data]="chartData" [options]="chartOptions"></p-chart>
-        </div>   
+            <p-chart
+                type="line"
+                [data]="chartData"
+                [options]="chartOptions"
+            ></p-chart>
+        </div>
     </div>
 </div>
-
